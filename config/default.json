@@ -1,0 +1,4 @@
+{
+    "mongoURI":"mongodb+srv://PhantomTroupe:PhantomTroupe2020@adrobot-jbd9q.mongodb.net/test?retryWrites=true&w=majority",
+    "jwtSecret":"mySecretToken"
+}
