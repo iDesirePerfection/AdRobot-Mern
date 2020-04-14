@@ -5,6 +5,8 @@ const Agent = require("../../models/Agent");
 const config = require('config');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const cryptoRandomString = require('crypto-random-string');
+var nodemailer = require('nodemailer');
 // @route    POST api/agents
 // @desc     Register user
 // @access   Public
@@ -36,13 +38,14 @@ router.post(
             //See if user exists
             let agent = await Agent.findOne({ email });
             if (agent) {
-                res.status(400).json({ errors: [{ msg: "agent already exists" }] });
+                console.log(agent.enabled);
+                return res.status(400).json({ errors: [{ msg: "agent already exists" }] });
             }
 
             const address = {};
             address.city = city;
             address.country = country;
-
+            const activation = cryptoRandomString({ length: 10 });
             agent = new Agent({
                 email,
                 password,
@@ -50,7 +53,28 @@ router.post(
                 lastName,
                 company,
                 address,
-                dateOfBirth
+                dateOfBirth,
+                activation
+            });
+            //send confirmation mail
+            var transporter = nodemailer.createTransport({
+                service: 'gmail',
+                auth: {
+                    user: 'adrobot2020@gmail.com',
+                    pass: 'PhantomTroupe2020'
+                }
+            });
+            const mailOptions = {
+                from: 'adrobot2020@gmail.com', // sender address
+                to: email, // list of receivers
+                subject: 'Confirmation code', // Subject line
+                html: '<p>Your confirmation code ' + activation + '</p>'// plain text body
+            };
+            transporter.sendMail(mailOptions, function (err, info) {
+                if (err)
+                    console.error(err)
+                else
+                    console.log(info);
             });
             //encrypt passwor(bcrypt)
             const salt = await bcrypt.genSalt(10);

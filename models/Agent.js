@@ -35,6 +35,13 @@ const AgentSchema = new mongoose.Schema({
     dateOfBirth: {
         type: Date,
         required: true
+    },
+    activation: {
+        type: String
+    },
+    enabled: {
+        type: Boolean,
+        default: false
     }
 });
 module.exports = Agent = mongoose.model('agent', AgentSchema);
