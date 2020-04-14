@@ -49,7 +49,8 @@ const CustomerSchema= new Schema({
         type:Number
     },
     loginHistory:{
-        type:String
+        type:String,
+        default: Date.now
     }
 });
 module.exports = Customer = mongoose.model('customer',CustomerSchema);

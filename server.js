@@ -8,11 +8,12 @@ connectDB();
 
 //Init Middeleware
 
-app.use(express.json({extended:false}));
+app.use(express.json({ extended: false }));
 
-app.get('/',(req,res) => res.send('API Running'));
+app.get('/', (req, res) => res.send('API Running'));
 
-app.use('/api/agents',require('./routes/api/agent'));
+app.use('/api/agents', require('./routes/api/agent'));
+app.use('/api/customers', require('./routes/api/customer'));
 
 
 const PORT = process.env.PORT || 5000;

@@ -1,11 +1,11 @@
 const express = require("express");
 const router = express.Router();
-const { check, validationResult } = require("express-validator/check");
+const { check, validationResult } = require("express-validator");
 const Agent = require("../../models/Agent");
 const config = require('config');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-// @route    POST api/users
+// @route    POST api/agents
 // @desc     Register user
 // @access   Public
 router.post(
@@ -80,5 +80,6 @@ router.post(
         }
     }
 );
+
 
 module.exports = router;
