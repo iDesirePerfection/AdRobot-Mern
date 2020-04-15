@@ -6,7 +6,7 @@ const { check, validationResult } = require('express-validator');
 
 // @route   POST api/customers
 // @desc    Create or update customer 
-// @access  Private 
+// @access  Public 
 router.post('/', [
     check('firstName', 'firstname is required').not().isEmpty(),
     check('lastName', 'lastname is required').not().isEmpty(),
