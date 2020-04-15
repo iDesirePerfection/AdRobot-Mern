@@ -40,6 +40,7 @@ import Validation from "views/pages/forms/Validation.jsx";
 import Vector from "views/pages/maps/Vector.jsx";
 import Widgets from "views/pages/Widgets.jsx";
 import AllUsers from "./views/pages/People/AllUsers.jsx";
+import NewUserFormModal from "./views/pages/components/NewUserFormModal.jsx";
 
 const routes = [
   {
@@ -52,34 +53,40 @@ const routes = [
         path: "/people/all-users",
         name: "All users",
         component: AllUsers,
-        layout: "/admin"
+        layout: "/admin",
+      },
+      {
+        path: "/people/new-user",
+        name: "new user",
+        component: NewUserFormModal,
+        layout: "/admin",
       },
 
       {
         path: "/people/all-leads",
         name: "All leads",
         component: Buttons,
-        layout: "/admin"
+        layout: "/admin",
       },
       {
         path: "/people/active",
         name: "Active",
         component: Buttons,
-        layout: "/admin"
+        layout: "/admin",
       },
       {
-        path: "/people/new",
+        path: "/people/view",
         name: "New",
-        component: Buttons,
-        layout: "/admin"
+        component: Profile,
+        layout: "/admin",
       },
       {
         path: "/people/slipping-away",
         name: "Slipping away",
         component: Buttons,
-        layout: "/admin"
-      }
-    ]
+        layout: "/admin",
+      },
+    ],
   },
   {
     collapse: true,
@@ -91,21 +98,21 @@ const routes = [
         path: "/outbound/all",
         name: "All",
         component: AllUsers,
-        layout: "/admin"
+        layout: "/admin",
       },
       {
         path: "/outbound/Email",
         name: "Email",
         component: Buttons,
-        layout: "/admin"
+        layout: "/admin",
       },
       {
         path: "/outbound/Campaign",
         name: "Campaign",
         component: Buttons,
-        layout: "/admin"
+        layout: "/admin",
       },
-    ]
+    ],
   },
   {
     collapse: true,
@@ -117,9 +124,9 @@ const routes = [
         path: "/offers/all",
         name: "All",
         component: AllUsers,
-        layout: "/admin"
-      }
-    ]
+        layout: "/admin",
+      },
+    ],
   },
   {
     collapse: true,
@@ -131,9 +138,9 @@ const routes = [
         path: "/settings",
         name: "All",
         component: AllUsers,
-        layout: "/admin"
-      }
-    ]
+        layout: "/admin",
+      },
+    ],
   },
   // {
   //   collapse: true,
@@ -173,18 +180,18 @@ const routes = [
   //       component: Pricing,
   //       layout: "/auth"
   //     },
-      {
-        path: "/login",
-        name: "Login",
-        component: Login,
-        layout: "/auth"
-      },
-      {
-        path: "/register",
-        name: "Register",
-        component: Register,
-        layout: "/auth"
-      },
+  {
+    path: "/login",
+    name: "Login",
+    component: Login,
+    layout: "/auth",
+  },
+  {
+    path: "/register",
+    name: "Register",
+    component: Register,
+    layout: "/auth",
+  },
   //     {
   //       path: "/lock",
   //       name: "Lock",
@@ -274,32 +281,32 @@ const routes = [
   //     }
   //   ]
   // },
-  // {
-  //   collapse: true,
-  //   name: "Forms",
-  //   icon: "ni ni-single-copy-04 text-pink",
-  //   state: "formsCollapse",
-  //   views: [
-  //     {
-  //       path: "/elements",
-  //       name: "Elements",
-  //       component: Elements,
-  //       layout: "/admin"
-  //     },
-  //     {
-  //       path: "/components",
-  //       name: "Components",
-  //       component: Components,
-  //       layout: "/admin"
-  //     },
-  //     {
-  //       path: "/validation",
-  //       name: "Validation",
-  //       component: Validation,
-  //       layout: "/admin"
-  //     }
-  //   ]
-  // },
+  {
+    collapse: true,
+    name: "Forms",
+    icon: "ni ni-single-copy-04 text-pink",
+    state: "formsCollapse",
+    views: [
+      {
+        path: "/elements",
+        name: "Elements",
+        component: Elements,
+        layout: "/admin",
+      },
+      {
+        path: "/components",
+        name: "Components",
+        component: Components,
+        layout: "/admin",
+      },
+      {
+        path: "/validation",
+        name: "Validation",
+        component: Validation,
+        layout: "/admin",
+      },
+    ],
+  },
   // {
   //   collapse: true,
   //   name: "Tables",
@@ -365,8 +372,8 @@ const routes = [
     name: "Calendar",
     icon: "ni ni-calendar-grid-58 text-red",
     component: Calendar,
-    layout: "/admin"
-  }
+    layout: "/admin",
+  },
 ];
 
 export default routes;

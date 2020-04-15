@@ -1,283 +1,118 @@
-import React from 'react';
+import React from "react";
 
 import {
-    Button,
-    Card,
-    CardHeader,
-    Table,
-    Container,
-    Row,
-    Col,
-    UncontrolledTooltip
+  Button,
+  Card,
+  CardHeader,
+  Table,
+  Container,
+  Row,
+  Col,
+  UncontrolledTooltip,
 } from "reactstrap";
 import AllPeopleHeader from "components/Headers/AllPeopleHeader.jsx";
-
+import moment from "moment";
 
 class AllUsers extends React.Component {
+  state = {
+    people: [
+      {
+        firstName: "Fahd",
+        lastName: "Chargui",
+        email: "fahd.charugi@esprit.tn",
+        address: "01 rue gabes ariana",
+        dateOfBirth: moment("2010-10-20 4:30", "YYYY-MM-DD HH:mm"),
+      },
+      {
+        firstName: "test",
+        lastName: "Chargui",
+        email: "fahd.charugi@esprit.tn",
+        address: "01 rue gabes ariana",
+        dateOfBirth: moment("2010-10-20 4:30", "YYYY-MM-DD HH:mm"),
+      },
+      {
+        firstName: "Fahd",
+        lastName: "Chargui",
+        email: "fahd.charugi@esprit.tn",
+        address: "01 rue gabes ariana",
+        dateOfBirth: moment("2010-10-20 4:30", "YYYY-MM-DD HH:mm"),
+      },
+    ],
+  };
+  async addPersonHandler(person) {
+    //console.log(person);
+    console.log(this.state.people);
+    // people.push(person);
+    // this.setState({ people: people });
+    // console.log(this.state.people);
+  }
+  render() {
+    return (
+      <>
+        <AllPeopleHeader
+          allPeople={this}
+          name="All Users"
+          parentName="People"
+        />
 
-    render() {
-        return (
-            <>
-                <AllPeopleHeader name="All Users" parentName="People" />
-
-                <Container className="mt--6" fluid>
-                    <Card>
-                        <CardHeader className="border-0">
-                            <Row>
-                                <Col xs="6">
-                                    <h3 className="mb-0">Checkbox + Labels</h3>
-                                </Col>
-                                <Col className="text-right" xs="6">
-                                    <Button
-                                        className="btn-round btn-icon"
-                                        color="danger"
-                                        href="#pablo"
-                                        id="tooltip163216539"
-                                        onClick={e => e.preventDefault()}
-                                        size="sm"
-                                    >
-                                        <span className="btn-inner--icon mr-1">
-                                            <i className="fas fa-trash" />
-                                        </span>
-                                        <span className="btn-inner--text">Delete</span>
-                                    </Button>
-                                    <UncontrolledTooltip delay={0} target="tooltip163216539">
-                                        Edit product
-                      </UncontrolledTooltip>
-                                </Col>
-                            </Row>
-                        </CardHeader>
-
-                        <Table className="align-items-center table-flush" hover responsive>
-                            <thead className="thead-light">
-                                <tr>
-                                    <th>
-                                        <div className="custom-control custom-checkbox">
-                                            <input
-                                                className="custom-control-input"
-                                                id="table-check-all"
-                                                type="checkbox"
-                                            />
-                                            <label
-                                                className="custom-control-label"
-                                                htmlFor="table-check-all"
-                                            />
-                                        </div>
-                                    </th>
-                                    <th>Author</th>
-                                    <th>Created at</th>
-                                    <th>Product</th>
-                                    <th>Active</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr className="table-success">
-                                    <th>
-                                        <div className="custom-control custom-checkbox">
-                                            <input
-                                                className="custom-control-input"
-                                                id="table-check-all"
-                                                type="checkbox"
-                                            />
-                                            <label
-                                                className="custom-control-label"
-                                                htmlFor="table-check-all"
-                                            />
-                                        </div>
-                                    </th>
-                                    <td className="table-user">
-                                        <b>John Michael</b>
-                                    </td>
-                                    <td>
-                                        <span className="text-muted">10/09/2018</span>
-                                    </td>
-                                    <td>
-                                        <a
-                                            className="font-weight-bold"
-                                            href="#pablo"
-                                            onClick={e => e.preventDefault()}
-                                        >
-                                            Argon Dashboard PRO
+        <Container className="mt--6" fluid>
+          <Card>
+            <Table className="align-items-center table-flush" hover responsive>
+              <thead className="thead-light">
+                <tr>
+                  <th>Full Name</th>
+                  <th>Email</th>
+                  <th>Address</th>
+                  <th>Date Of Birth</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {this.state.people.map((person) => {
+                  return (
+                    <tr className="table-">
+                      <td className="table-user">
+                        <b>{person.firstName + " " + person.lastName}</b>
+                      </td>
+                      <td>
+                        <span className="text-muted">{person.email}</span>
+                      </td>
+                      <td>
+                        <a
+                          className="font-weight-bold"
+                          href="#pablo"
+                          onClick={(e) => e.preventDefault()}
+                        >
+                          {person.address}
                         </a>
-                                    </td>
-                                    <td>
-                                        <label className="custom-toggle">
-                                            <input defaultChecked type="checkbox" />
-                                            <span
-                                                className="custom-toggle-slider rounded-circle"
-                                                data-label-off="No"
-                                                data-label-on="Yes"
-                                            />
-                                        </label>
-                                    </td>
-                                </tr>
-                                <tr className="table-">
-                                    <th>
-                                        <div className="custom-control custom-checkbox">
-                                            <input
-                                                className="custom-control-input"
-                                                id="table-check-all"
-                                                type="checkbox"
-                                            />
-                                            <label
-                                                className="custom-control-label"
-                                                htmlFor="table-check-all"
-                                            />
-                                        </div>
-                                    </th>
-                                    <td className="table-user">
-                                        <b>Alex Smith</b>
-                                    </td>
-                                    <td>
-                                        <span className="text-muted">08/09/2018</span>
-                                    </td>
-                                    <td>
-                                        <a
-                                            className="font-weight-bold"
-                                            href="#pablo"
-                                            onClick={e => e.preventDefault()}
-                                        >
-                                            Argon Design System
-                        </a>
-                                    </td>
-                                    <td>
-                                        <label className="custom-toggle">
-                                            <input type="checkbox" />
-                                            <span
-                                                className="custom-toggle-slider rounded-circle"
-                                                data-label-off="No"
-                                                data-label-on="Yes"
-                                            />
-                                        </label>
-                                    </td>
-                                </tr>
-                                <tr className="table-warning">
-                                    <th>
-                                        <div className="custom-control custom-checkbox">
-                                            <input
-                                                className="custom-control-input"
-                                                id="table-check-all"
-                                                type="checkbox"
-                                            />
-                                            <label
-                                                className="custom-control-label"
-                                                htmlFor="table-check-all"
-                                            />
-                                        </div>
-                                    </th>
-                                    <td className="table-user">
-                                        <b>Samantha Ivy</b>
-                                    </td>
-                                    <td>
-                                        <span className="text-muted">30/08/2018</span>
-                                    </td>
-                                    <td>
-                                        <a
-                                            className="font-weight-bold"
-                                            href="#pablo"
-                                            onClick={e => e.preventDefault()}
-                                        >
-                                            Black Dashboard
-                        </a>
-                                    </td>
-                                    <td>
-                                        <label className="custom-toggle">
-                                            <input type="checkbox" />
-                                            <span
-                                                className="custom-toggle-slider rounded-circle"
-                                                data-label-off="No"
-                                                data-label-on="Yes"
-                                            />
-                                        </label>
-                                    </td>
-                                </tr>
-                                <tr className="table-">
-                                    <th>
-                                        <div className="custom-control custom-checkbox">
-                                            <input
-                                                className="custom-control-input"
-                                                id="table-check-all"
-                                                type="checkbox"
-                                            />
-                                            <label
-                                                className="custom-control-label"
-                                                htmlFor="table-check-all"
-                                            />
-                                        </div>
-                                    </th>
-                                    <td className="table-user">
-                                        <b>John Michael</b>
-                                    </td>
-                                    <td>
-                                        <span className="text-muted">10/09/2018</span>
-                                    </td>
-                                    <td>
-                                        <a
-                                            className="font-weight-bold"
-                                            href="#pablo"
-                                            onClick={e => e.preventDefault()}
-                                        >
-                                            Argon Dashboard PRO
-                        </a>
-                                    </td>
-                                    <td>
-                                        <label className="custom-toggle">
-                                            <input defaultChecked type="checkbox" />
-                                            <span
-                                                className="custom-toggle-slider rounded-circle"
-                                                data-label-off="No"
-                                                data-label-on="Yes"
-                                            />
-                                        </label>
-                                    </td>
-                                </tr>
-                                <tr className="table-">
-                                    <th>
-                                        <div className="custom-control custom-checkbox">
-                                            <input
-                                                className="custom-control-input"
-                                                id="table-check-all"
-                                                type="checkbox"
-                                            />
-                                            <label
-                                                className="custom-control-label"
-                                                htmlFor="table-check-all"
-                                            />
-                                        </div>
-                                    </th>
-                                    <td className="table-user">
-                                        <b>John Michael</b>
-                                    </td>
-                                    <td>
-                                        <span className="text-muted">10/09/2018</span>
-                                    </td>
-                                    <td>
-                                        <a
-                                            className="font-weight-bold"
-                                            href="#pablo"
-                                            onClick={e => e.preventDefault()}
-                                        >
-                                            Argon Dashboard PRO
-                        </a>
-                                    </td>
-                                    <td>
-                                        <label className="custom-toggle">
-                                            <input defaultChecked type="checkbox" />
-                                            <span
-                                                className="custom-toggle-slider rounded-circle"
-                                                data-label-off="No"
-                                                data-label-on="Yes"
-                                            />
-                                        </label>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </Table>
-                    </Card>
-                </Container>
-            </>
-        );
-    }
+                      </td>
+                      <td>
+                        <span className="text-muted">
+                          {person.dateOfBirth.format("YYYY-MM-DD")}
+                        </span>
+                      </td>
+                      <td>
+                        <Button
+                          className="btn-round btn-icon"
+                          color="danger"
+                          href="#pablo"
+                          size="sm"
+                        >
+                          <span className="btn-inner--icon mr-1">
+                            <i className="fas fa-trash" />
+                          </span>
+                        </Button>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </Table>
+          </Card>
+        </Container>
+      </>
+    );
+  }
 }
 
 export default AllUsers;
