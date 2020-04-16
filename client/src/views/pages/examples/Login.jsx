@@ -1,26 +1,7 @@
-/*!
-
-=========================================================
-* Argon Dashboard PRO React - v1.0.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-pro-react
-* Copyright 2019 Creative Tim (https://www.creative-tim.com)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
-import React from "react";
-// nodejs library that concatenates classes
+import React, { useState } from "react";
 import classnames from "classnames";
-
 import axios from 'axios';
-// import { Redirect } from 'react-router-dom';
-// reactstrap components
+import AuthHeader from "components/Headers/AuthHeader.jsx";
 import {
   Button,
   Card,
@@ -36,178 +17,171 @@ import {
   Row,
   Col
 } from "reactstrap";
-// core components
-import AuthHeader from "components/Headers/AuthHeader.jsx";
-
-class Login extends React.Component {
-  state = {
-    username: null,
-    password: null
-  };
-  componentDidMount() {
-
-  };
-
-  trySignInHandler = () => {
-    axios.get('https://jsonplaceholder.typicode.com/posts')
-      .then(e => console.log(e));
-    //if (this.state)
-
-    console.log(this.state.username);
-    console.log(this.state.password);
 
 
+const Login = () => {
 
+  const [formData, setFormData] = useState({
+    email: '',
+    password: ''
+  });
+  const { email, password } = formData;
+  const onChange = e => setFormData({
+    ...formData, [e.target.name]: e.target.value
+  });
+  const onClick = async e => {
+    e.preventDefault();
+    const userLogin = {
+      email,
+      password
+    }
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+      const body = JSON.stringify(userLogin);
+      const res = await axios.post('/api/auth', body, config);
+      console.log(res.data);
+    } catch (error) {
+      console.error(error.response.data);
+    }
   }
+  return (
+    <>
+      <AuthHeader
+        title="Welcome to AdRobot!"
+        lead="Use these to login or create new account."
+      />
+      <Container className="mt--8 pb-5">
+        <Row className="justify-content-center">
+          <Col lg="5" md="7">
+            <Card className="bg-secondary border-0 mb-0">
+              <CardHeader className="bg-transparent pb-5">
+                <div className="text-muted text-center mt-2 mb-3">
+                  <small>Sign in with</small>
+                </div>
+                <div className="btn-wrapper text-center">
+                  <Button
+                    className="btn-neutral btn-icon"
+                    color="default"
+                    href="#pablo"
 
-  emailChangedHandler = (event) => {
-    this.setState({ username: event.target.value });
-  }
-  passwordChangedHandler = (event) => {
-    this.setState({ password: event.target.value });
-  }
-  render() {
-    return (
-      <>
-        <AuthHeader
-          title="Welcome!"
-          lead="Use these awesome forms to login or create new account in your project for free."
-        />
-        <Container className="mt--8 pb-5">
-          <Row className="justify-content-center">
-            <Col lg="5" md="7">
-              <Card className="bg-secondary border-0 mb-0">
-                <CardHeader className="bg-transparent pb-5">
-                  <div className="text-muted text-center mt-2 mb-3">
-                    <small>Sign in with</small>
-                  </div>
-                  <div className="btn-wrapper text-center">
-                    <Button
-                      className="btn-neutral btn-icon"
-                      color="default"
-                      href="#pablo"
-                      onClick={e => e.preventDefault()}
-                    >
-                      <span className="btn-inner--icon mr-1">
-                        <img
-                          alt="..."
-                          src={require("assets/img/icons/common/github.svg")}
-                        />
-                      </span>
-                      <span className="btn-inner--text">Github</span>
-                    </Button>
-                    <Button
-                      className="btn-neutral btn-icon"
-                      color="default"
-                      href="#pablo"
-                      onClick={e => e.preventDefault()}
-                    >
-                      <span className="btn-inner--icon mr-1">
-                        <img
-                          alt="..."
-                          src={require("assets/img/icons/common/google.svg")}
-                        />
-                      </span>
-                      <span className="btn-inner--text">Google</span>
-                    </Button>
-                  </div>
-                </CardHeader>
-                <CardBody className="px-lg-5 py-lg-5">
-                  <div className="text-center text-muted mb-4">
-                    <small>Or sign in with credentials</small>
-                  </div>
-                  <Form role="form">
-                    <FormGroup
-                      className={classnames("mb-3", {
-                        focused: this.state.focusedEmail
-                      })}
-                    >
-                      <InputGroup className="input-group-merge input-group-alternative">
-                        <InputGroupAddon addonType="prepend">
-                          <InputGroupText>
-                            <i className="ni ni-email-83" />
-                          </InputGroupText>
-                        </InputGroupAddon>
-                        <Input
-                          placeholder="Email"
-                          type="email"
-                          onChange={(event) => this.emailChangedHandler(event)}
-                          onFocus={() => this.setState({ focusedEmail: true })}
-                          onBlur={() => this.setState({ focusedEmail: false })}
-                        />
-                      </InputGroup>
-                    </FormGroup>
-                    <FormGroup
-                      className={classnames({
-                        focused: this.state.focusedPassword
-                      })}
-                    >
-                      <InputGroup className="input-group-merge input-group-alternative">
-                        <InputGroupAddon addonType="prepend">
-                          <InputGroupText>
-                            <i className="ni ni-lock-circle-open" />
-                          </InputGroupText>
-                        </InputGroupAddon>
-                        <Input
-                          placeholder="Password"
-                          type="password"
-                          onChange={(event) => this.passwordChangedHandler(event)}
-                          onFocus={() =>
-                            this.setState({ focusedPassword: true })
-                          }
-                          onBlur={() =>
-                            this.setState({ focusedPassword: false })
-                          }
-                        />
-                      </InputGroup>
-                    </FormGroup>
-                    <div className="custom-control custom-control-alternative custom-checkbox">
-                      <input
-                        className="custom-control-input"
-                        id=" customCheckLogin"
-                        type="checkbox"
+                  >
+                    <span className="btn-inner--icon mr-1">
+                      <img
+                        alt="..."
+                        src={require("assets/img/icons/common/github.svg")}
                       />
-                      <label
-                        className="custom-control-label"
-                        htmlFor=" customCheckLogin"
-                      >
-                        <span className="text-muted">Remember me</span>
-                      </label>
-                    </div>
-                    <div className="text-center">
-                      <Button onClick={this.trySignInHandler} className="my-4" color="info" type="button">
-                        Sign in
+                    </span>
+                    <span className="btn-inner--text">Github</span>
+                  </Button>
+                  <Button
+                    className="btn-neutral btn-icon"
+                    color="default"
+                    href="#pablo"
+
+                  >
+                    <span className="btn-inner--icon mr-1">
+                      <img
+                        alt="..."
+                        src={require("assets/img/icons/common/google.svg")}
+                      />
+                    </span>
+                    <span className="btn-inner--text">Google</span>
+                  </Button>
+                </div>
+              </CardHeader>
+              <CardBody className="px-lg-5 py-lg-5">
+                <div className="text-center text-muted mb-4">
+                  <small>Or sign in with credentials</small>
+                </div>
+                <Form role="form" className='form'  >
+                  <FormGroup
+                  >
+                    <InputGroup className="input-group-merge input-group-alternative">
+                      <InputGroupAddon addonType="prepend">
+                        <InputGroupText>
+                          <i className="ni ni-email-83" />
+                        </InputGroupText>
+                      </InputGroupAddon>
+                      <Input
+                        placeholder="Email"
+                        type="email"
+                        name="email"
+                        value={email}
+                        onChange={e => onChange(e)}
+                        required
+
+                      />
+                    </InputGroup>
+                  </FormGroup>
+                  <FormGroup
+                  >
+                    <InputGroup className="input-group-merge input-group-alternative">
+                      <InputGroupAddon addonType="prepend">
+                        <InputGroupText>
+                          <i className="ni ni-lock-circle-open" />
+                        </InputGroupText>
+                      </InputGroupAddon>
+                      <Input
+                        placeholder="Password"
+                        type="password"
+                        name="password"
+                        value={password}
+                        onChange={e => onChange(e)}
+                        required
+                      />
+                    </InputGroup>
+                  </FormGroup>
+                  <div className="custom-control custom-control-alternative custom-checkbox">
+                    <input
+                      className="custom-control-input"
+                      id=" customCheckLogin"
+                      type="checkbox"
+                    />
+                    <label
+                      className="custom-control-label"
+                      htmlFor=" customCheckLogin"
+                    >
+                      <span className="text-muted">Remember me</span>
+                    </label>
+                  </div>
+                  <div className="text-center">
+                    <Button onClick={e => onClick(e)} className="my-4" color="info" type="button">
+                      Sign in
                       </Button>
-                    </div>
-                  </Form>
-                </CardBody>
-              </Card>
-              <Row className="mt-3">
-                <Col xs="6">
-                  <a
-                    className="text-light"
-                    href="#pablo"
-                    onClick={e => e.preventDefault()}
-                  >
-                    <small>Forgot password?</small>
-                  </a>
-                </Col>
-                <Col className="text-right" xs="6">
-                  <a
-                    className="text-light"
-                    href="#pablo"
-                    onClick={e => e.preventDefault()}
-                  >
-                    <small>Create new account</small>
-                  </a>
-                </Col>
-              </Row>
-            </Col>
-          </Row>
-        </Container>
-      </>
-    );
-  }
+                  </div>
+                </Form>
+              </CardBody>
+            </Card>
+            <Row className="mt-3">
+              <Col xs="6">
+                <a
+                  className="text-light"
+                  href="#pablo"
+
+                >
+                  <small>Forgot password?</small>
+                </a>
+              </Col>
+              <Col className="text-right" xs="6">
+                <a
+                  className="text-light"
+                  href="#pablo"
+
+                >
+                  <small>Create new account</small>
+                </a>
+              </Col>
+            </Row>
+          </Col>
+        </Row>
+      </Container>
+    </>
+  );
 }
+
 
 export default Login;
