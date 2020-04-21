@@ -98,11 +98,11 @@ class AdminNavbar extends React.Component {
                     <span className="nav-link-inner--text">Dashboard</span>
                   </NavLink>
                 </NavItem>
-                <NavItem>
+                {/* <NavItem>
                   <NavLink to="/auth/pricing" tag={Link}>
                     <span className="nav-link-inner--text">Pricing</span>
                   </NavLink>
-                </NavItem>
+                </NavItem> */}
                 <NavItem>
                   <NavLink to="/auth/login" tag={Link}>
                     <span className="nav-link-inner--text">Login</span>
@@ -113,11 +113,11 @@ class AdminNavbar extends React.Component {
                     <span className="nav-link-inner--text">Register</span>
                   </NavLink>
                 </NavItem>
-                <NavItem>
+                {/* <NavItem>
                   <NavLink to="/auth/lock" tag={Link}>
                     <span className="nav-link-inner--text">Lock</span>
                   </NavLink>
-                </NavItem>
+                </NavItem> */}
               </Nav>
               <hr className="d-lg-none" />
               <Nav className="align-items-lg-center ml-lg-auto" navbar>
@@ -186,17 +186,7 @@ class AdminNavbar extends React.Component {
                   </UncontrolledTooltip>
                 </NavItem>
                 <NavItem className="d-none d-lg-block ml-lg-4">
-                  <Button
-                    className="btn-neutral btn-icon"
-                    color="default"
-                    href="https://www.creative-tim.com/product/argon-dashboard-pro-react?ref=adpr-auth-navbar"
-                    target="_blank"
-                  >
-                    <span className="btn-inner--icon">
-                      <i className="fas fa-shopping-cart mr-2" />
-                    </span>
-                    <span className="nav-link-inner--text">Purchase now</span>
-                  </Button>
+                  
                 </NavItem>
               </Nav>
             </UncontrolledCollapse>

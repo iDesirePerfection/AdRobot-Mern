@@ -124,7 +124,7 @@ class AdminNavbar extends React.Component {
                 <NavItem>
                   <NavLink
                     className="nav-link-icon"
-                    href="https://www.facebook.com/creativetim?ref=creative-tim"
+                    href="https://www.facebook.com/AdRobotAutomatic-Segmentation-for-personal-campaigns-100773638277656"
                     id="tooltip601201423"
                     target="_blank"
                   >
@@ -192,10 +192,7 @@ class AdminNavbar extends React.Component {
                     href="https://www.creative-tim.com/product/argon-dashboard-pro-react?ref=adpr-index-navbar"
                     target="_blank"
                   >
-                    <span className="btn-inner--icon">
-                      <i className="fas fa-shopping-cart mr-2" />
-                    </span>
-                    <span className="nav-link-inner--text">Purchase now</span>
+                   
                   </Button>
                 </NavItem>
               </Nav>

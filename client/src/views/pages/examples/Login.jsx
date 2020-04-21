@@ -1,7 +1,13 @@
 import React, { useState } from "react";
 import classnames from "classnames";
-import axios from 'axios';
+
 import AuthHeader from "components/Headers/AuthHeader.jsx";
+import { connect } from 'react-redux';
+import { setAlert } from '../../../actions/alert';
+import PropTypes from 'prop-types'
+import Alert from '../../../components/Alert';
+import { login } from '../../../actions/auth'
+import { Redirect, Link } from 'react-router-dom';
 import {
   Button,
   Card,
@@ -19,7 +25,8 @@ import {
 } from "reactstrap";
 
 
-const Login = () => {
+
+const Login = ({ login, isAuthenticated }) => {
 
   const [formData, setFormData] = useState({
     email: '',
@@ -31,23 +38,10 @@ const Login = () => {
   });
   const onClick = async e => {
     e.preventDefault();
-    const userLogin = {
-      email,
-      password
-    }
-    try {
-      const config = {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      }
-      const body = JSON.stringify(userLogin);
-      const res = await axios.post('/api/auth', body, config);
-      console.log(res.data);
-    } catch (error) {
-      console.error(error.response.data);
-    }
-  }
+    login(email, password);
+  };
+
+
   return (
     <>
       <AuthHeader
@@ -97,6 +91,7 @@ const Login = () => {
                 <div className="text-center text-muted mb-4">
                   <small>Or sign in with credentials</small>
                 </div>
+                <Alert></Alert>
                 <Form role="form" className='form'  >
                   <FormGroup
                   >
@@ -172,7 +167,7 @@ const Login = () => {
                   href="#pablo"
 
                 >
-                  <small>Create new account</small>
+                  <small><Link to='register'>Create new account</Link></small>
                 </a>
               </Col>
             </Row>
@@ -183,5 +178,11 @@ const Login = () => {
   );
 }
 
-
-export default Login;
+Login.propTypes = {
+  login: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool,
+}
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated
+})
+export default connect(mapStateToProps, { login })(Login);

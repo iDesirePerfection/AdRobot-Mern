@@ -39,6 +39,7 @@ class AllUsers extends React.Component {
       },
     ],
   };
+  
   async addPersonHandler(person) {
     //console.log(person);
     console.log(this.state.people);

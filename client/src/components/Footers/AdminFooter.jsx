@@ -32,7 +32,7 @@ class Calendar extends React.Component {
                   © {new Date().getFullYear()}{" "}
                   <a
                     className="font-weight-bold ml-1"
-                    href="https://www.facebook.com/AdRobot-automated-marketing-105216527815203/"
+                    href="https://www.facebook.com/AdRobotAutomatic-Segmentation-for-personal-campaigns-100773638277656"
                     target="_blank"
                   >
                     Ad Robot
@@ -43,7 +43,7 @@ class Calendar extends React.Component {
                 <Nav className="nav-footer justify-content-center justify-content-lg-end">
                   <NavItem>
                     <NavLink
-                      href="https://www.facebook.com/AdRobot-automated-marketing-105216527815203/"
+                      href="https://www.facebook.com/AdRobotAutomatic-Segmentation-for-personal-campaigns-100773638277656"
                       target="_blank"
                     >
                       Ad Robot
@@ -51,7 +51,7 @@ class Calendar extends React.Component {
                   </NavItem>
                   <NavItem>
                     <NavLink
-                      href="https://www.facebook.com/AdRobot-automated-marketing-105216527815203/"
+                      href="https://www.facebook.com/AdRobotAutomatic-Segmentation-for-personal-campaigns-100773638277656"
                       target="_blank"
                     >
                       About Us

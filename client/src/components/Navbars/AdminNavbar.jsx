@@ -48,26 +48,26 @@ class AdminNavbar extends React.Component {
   // function that on mobile devices makes the search open
   openSearch = () => {
     document.body.classList.add("g-navbar-search-showing");
-    setTimeout(function() {
+    setTimeout(function () {
       document.body.classList.remove("g-navbar-search-showing");
       document.body.classList.add("g-navbar-search-show");
     }, 150);
-    setTimeout(function() {
+    setTimeout(function () {
       document.body.classList.add("g-navbar-search-shown");
     }, 300);
   };
   // function that on mobile devices makes the search close
   closeSearch = () => {
     document.body.classList.remove("g-navbar-search-shown");
-    setTimeout(function() {
+    setTimeout(function () {
       document.body.classList.remove("g-navbar-search-show");
       document.body.classList.add("g-navbar-search-hiding");
     }, 150);
-    setTimeout(function() {
+    setTimeout(function () {
       document.body.classList.remove("g-navbar-search-hiding");
       document.body.classList.add("g-navbar-search-hidden");
     }, 300);
-    setTimeout(function() {
+    setTimeout(function () {
       document.body.classList.remove("g-navbar-search-hidden");
     }, 500);
   };
@@ -165,7 +165,7 @@ class AdminNavbar extends React.Component {
                           <div className="col ml--2">
                             <div className="d-flex justify-content-between align-items-center">
                               <div>
-                                <h4 className="mb-0 text-sm">John Snow</h4>
+                                <h4 className="mb-0 text-sm"> Mouhib Ben Rhouma</h4>
                               </div>
                               <div className="text-right text-muted">
                                 <small>2 hrs ago</small>
@@ -194,7 +194,7 @@ class AdminNavbar extends React.Component {
                           <div className="col ml--2">
                             <div className="d-flex justify-content-between align-items-center">
                               <div>
-                                <h4 className="mb-0 text-sm">John Snow</h4>
+                                <h4 className="mb-0 text-sm">Mouhib Ben Rhouma</h4>
                               </div>
                               <div className="text-right text-muted">
                                 <small>3 hrs ago</small>
@@ -223,7 +223,7 @@ class AdminNavbar extends React.Component {
                           <div className="col ml--2">
                             <div className="d-flex justify-content-between align-items-center">
                               <div>
-                                <h4 className="mb-0 text-sm">John Snow</h4>
+                                <h4 className="mb-0 text-sm"> Mouhib Ben Rhouma</h4>
                               </div>
                               <div className="text-right text-muted">
                                 <small>5 hrs ago</small>
@@ -252,7 +252,7 @@ class AdminNavbar extends React.Component {
                           <div className="col ml--2">
                             <div className="d-flex justify-content-between align-items-center">
                               <div>
-                                <h4 className="mb-0 text-sm">John Snow</h4>
+                                <h4 className="mb-0 text-sm">Mouhib Ben Rhouma</h4>
                               </div>
                               <div className="text-right text-muted">
                                 <small>2 hrs ago</small>
@@ -281,7 +281,7 @@ class AdminNavbar extends React.Component {
                           <div className="col ml--2">
                             <div className="d-flex justify-content-between align-items-center">
                               <div>
-                                <h4 className="mb-0 text-sm">John Snow</h4>
+                                <h4 className="mb-0 text-sm"> Mouhib Ben Rhouma</h4>
                               </div>
                               <div className="text-right text-muted">
                                 <small>3 hrs ago</small>
@@ -401,7 +401,7 @@ class AdminNavbar extends React.Component {
                       </span>
                       <Media className="ml-2 d-none d-lg-block">
                         <span className="mb-0 text-sm font-weight-bold">
-                          John Snow
+                        Mouhib Ben Rhouma
                         </span>
                       </Media>
                     </Media>
@@ -457,7 +457,7 @@ class AdminNavbar extends React.Component {
   }
 }
 AdminNavbar.defaultProps = {
-  toggleSidenav: () => {},
+  toggleSidenav: () => { },
   sidenavOpen: false,
   theme: "dark"
 };

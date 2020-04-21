@@ -379,10 +379,7 @@ class Index extends React.Component {
                       href="https://www.creative-tim.com/product/argon-dashboard-pro-react?ref=adpr-index-page"
                       target="_blank"
                     >
-                      <span className="btn-inner--icon">
-                        <i className="ni ni-basket" />
-                      </span>
-                      <span className="btn-inner--text">Purchase now</span>
+                      
                       <Badge
                         className="badge-md badge-floating border-white"
                         color="danger"

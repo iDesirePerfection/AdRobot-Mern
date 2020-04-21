@@ -13,11 +13,8 @@ const Agent = require('../../models/Agent');
 // @access  Public 
 router.get('/', auth, async (req, res) => {
     try {
-        const agent = await Agent.findById(req.user.id).select('-password');
-        if (user.enabled == false) {
-            return res.status(400).json({ errors: [{ msg: ' account inactivated ' }] })
+        const agent = await Agent.findById(req.agent.id).select('-password');
 
-        }
         res.json(agent);
     } catch (error) {
         console.error(error.message);
@@ -51,10 +48,7 @@ router.post('/', [
             if (!agent) {
                 return res.status(400).json({ errors: [{ msg: 'invalid credentials' }] });
             }
-            if (agent.enabled == false) {
-                return res.status(400).json({ errors: [{ msg: ' account inactivated ' }] })
 
-            }
 
             //match password
             const isMatch = await bcrypt.compare(password, agent.password);

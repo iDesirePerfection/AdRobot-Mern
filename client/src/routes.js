@@ -2,7 +2,7 @@
 
 =========================================================
 * Argon Dashboard PRO React - v1.0.0
-=========================================================
+========================================================= 
 
 * Product Page: https://www.creative-tim.com/product/argon-dashboard-pro-react
 * Copyright 2019 Creative Tim (https://www.creative-tim.com)

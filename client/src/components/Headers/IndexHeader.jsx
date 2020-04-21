@@ -51,13 +51,7 @@ class IndexHeader extends React.Component {
                       >
                         Explore Dashboard
                       </Button>
-                      <Button
-                        className="my-2"
-                        color="default"
-                        href="https://www.creative-tim.com/product/argon-dashboard-pro-react?ref=adpr-auth-navbar"
-                      >
-                        Purchase now
-                      </Button>
+                     
                     </div>
                   </div>
                 </Col>

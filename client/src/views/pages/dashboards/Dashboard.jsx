@@ -533,7 +533,7 @@ class Dashboard extends React.Component {
                         href="#pablo"
                         onClick={e => e.preventDefault()}
                       >
-                        John Snow
+                       Mouhib Ben Rhouma
                       </a>
                       <small className="d-block text-muted">3 days ago</small>
                     </div>

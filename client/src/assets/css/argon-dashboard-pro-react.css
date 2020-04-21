@@ -53,7 +53,7 @@
 
 *,
 *::before,
-*::after {
+*::after {email
   box-sizing: border-box; }
 
 html {
