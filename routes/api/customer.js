@@ -33,7 +33,8 @@ router.post('/', [
             religion,
             hobbies,
             phoneNumber,
-            maritalStatus
+            maritalStatus,
+            ChildrenNumber
 
         } = req.body;
 
@@ -54,6 +55,8 @@ router.post('/', [
 
         if (phoneNumber) customerFields.phoneNumber = phoneNumber;
         if (maritalStatus) customerFields.maritalStatus = maritalStatus;
+        if (ChildrenNumber) customerFields.ChildrenNumber = ChildrenNumber;
+
 
         customerFields.address = {};
         if (city) customerFields.address.city = city;
