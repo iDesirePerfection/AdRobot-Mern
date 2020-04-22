@@ -9,6 +9,18 @@ connectDB();
 //Init Middeleware
 
 app.use(express.json({ extended: false }));
+app.use((req,res,next)=> {
+    res.setHeader('Access-Control-Allow-Origin','*');
+    res.setHeader(
+        'Access-Control-Allow-Headers',
+        'Origin, X-Requested-Width, Content-Type, Accept, Authorisation'
+    );
+    res.setHeader(
+        'Access-Control-Allow-Methods',
+        'GET, POST, PATCH, DELETE, OPTIONS'
+    );
+    next();
+})
 
 app.get('/', (req, res) => res.send('API Running'));
 
