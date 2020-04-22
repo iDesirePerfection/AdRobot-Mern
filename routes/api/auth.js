@@ -44,6 +44,7 @@ router.post('/', [
         const { email, password } = req.body;
 
         try {
+            res.header("Access-Control-Allow-Origin", "localhost");
             //See if agent exists
             let agent = await Agent.findOne({ email });
             if (!agent) {
