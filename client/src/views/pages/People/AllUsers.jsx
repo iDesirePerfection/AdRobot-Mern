@@ -59,37 +59,44 @@ class AllUsers extends React.Component {
       this.setState({ people });
     });
   }
-  addPersonHandler = async person => {
-    //  const people = [
-    //    ...this.state.people
-    //  ];
-    //  people.push(person);
-    //  this.setState({people:people});
+  addPersonHandler = (person) => {
 
+    //Construct The person object
     const finalPerson = {
       firstName: person.firstName,
       lastName: person.lastName,
       email: person.email,
       DateOfBirth: person.dateOfBirth.format("MM/DD/YYYY"),
-      city: person.address.city
+      city: person.address.city,
+      fieldOfWork:person.fieldOfWork,
+      gender:person.gender,
+      religion:person.religion,
+      // hobbies:person.hobbies,
+      phoneNumber:person.phoneNumber,
+      maritalStatus:person.maritalStatus,
+      ChildrenNumber:person.childrenNumber
     };
 
-    console.log(finalPerson);
-    this.componentDidMount();
-    try {
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      };
-      const body = JSON.stringify(finalPerson);
-      const res = await axios.post('http://localhost:5000/api/customers', body, config);
-      console.log(res.data);
+    //config for axios post request
 
-    }
-    catch (error) {
-      console.error(error.response.data);
-    }
+    const config = {
+          headers: {
+            "Content-Type": "application/json",
+          }
+        }
+
+    // axios post request to add or update user to database
+    axios.post("http://localhost:5000/api/customers", finalPerson, config).then(res=> {
+    // change person state immutably
+      const people = [...this.state.people];
+          people.push(res.data);
+          this.setState({ people: people });
+          console.log(this.state.people);
+    })
+    .catch(error => {
+      //handling post request errors
+        console.log(error.response);
+    });
   };
 
   viewCustomerHandler() {

@@ -2,7 +2,8 @@ import React from "react";
 // nodejs library to set properties for components
 import PropTypes from "prop-types";
 import ReactDatetime from "react-datetime";
-import axios from 'axios';
+import axios from "axios";
+import TagsInput from "react-tagsinput";
 // reactstrap components
 import {
   Breadcrumb,
@@ -33,10 +34,18 @@ class AllPeopleHeader extends React.Component {
       firstName: "",
       lastName: "",
       email: "",
-      address:{
-        city:""
+      address: {
+        city: "",
       },
       dateOfBirth: "",
+
+      fieldOfWork: "",
+      gender: "",
+      religion: "",
+      hobbies: [],
+      phoneNumber: "",
+      maritalStatus: "",
+      childrenNumber: 0,
     },
   };
   toggleModal = (state) => {
@@ -45,27 +54,7 @@ class AllPeopleHeader extends React.Component {
     });
   };
 
-  changeFirstNameHandler = (event) => {
-    const person = this.state.person;
-    person.firstName = event.target.value;
-    this.setState({
-      person: person,
-    });
-  };
-  changeLastNameHandler = (event) => {
-    const person = this.state.person;
-    person.lastName = event.target.value;
-    this.setState({
-      person: person,
-    });
-  };
-  changeEmailHandler = (event) => {
-    const person = this.state.person;
-    person.email = event.target.value;
-    this.setState({
-      person: person,
-    });
-  };
+
   changeAddressHandler = (event) => {
     const person = this.state.person;
     person.address.city = event.target.value;
@@ -80,21 +69,38 @@ class AllPeopleHeader extends React.Component {
       person: person,
     });
   };
+  
+  changeInputHandler = (event,inputIdentifier) => {
+    const updatedPerson = {
+      ...this.state.person
+    }
+    updatedPerson[inputIdentifier] = event.target.value;
+    this.setState({person:updatedPerson});
+  }
+
+  changeHobbiesHandler = hobbies => {
+    const updatedPerson = {
+      ...this.state.person
+    }
+    updatedPerson.hobbies = hobbies;
+     this.setState({person:updatedPerson});
+
+  };
 
   submitFormHandler = (event) => {
     this.props.addPerson(this.state.person);
     this.toggleModal("formModal");
-    const defaultPerson = {
-      firstName: "",
-      lastName: "",
-      email: "",
-      address:{
-        city:""
-      },
-      dateOfBirth: moment("2010-10-20 4:30", "YYYY-MM-DD HH:mm"),
-    };
-    this.setState({ person: defaultPerson });
-    
+
+    // const defaultPerson = {
+    //   firstName: "",
+    //   lastName: "",
+    //   email: "",
+    //   address: {
+    //     city: "",
+    //   },
+    //   dateOfBirth: moment("2010-10-20 4:30", "YYYY-MM-DD HH:mm"),
+    // };
+    // this.setState({ person: defaultPerson });
   };
   render() {
     return (
@@ -168,7 +174,7 @@ class AllPeopleHeader extends React.Component {
                           <Input
                             placeholder="First Name"
                             type="text"
-                            onChange={this.changeFirstNameHandler}
+                            onChange={(event)=>this.changeInputHandler(event,'firstName')}
                           />
                         </InputGroup>
                       </FormGroup>
@@ -184,7 +190,7 @@ class AllPeopleHeader extends React.Component {
                           <Input
                             placeholder="Last Name"
                             type="text"
-                            onChange={this.changeLastNameHandler}
+                            onChange={(event)=>this.changeInputHandler(event,'lastName')}
                           />
                         </InputGroup>
                       </FormGroup>
@@ -202,7 +208,7 @@ class AllPeopleHeader extends React.Component {
                           <Input
                             placeholder="Email"
                             type="text"
-                            onChange={this.changeEmailHandler}
+                            onChange={(event)=>this.changeInputHandler(event,'email')}
                           />
                         </InputGroup>
                       </FormGroup>
@@ -233,6 +239,129 @@ class AllPeopleHeader extends React.Component {
                       onChange={this.changeDobHandler}
                     />
                   </FormGroup>
+                  <Row>
+                    <Col md="6">
+                      <FormGroup className="mb-3">
+                        <InputGroup className="input-group-alternative">
+                          <InputGroupAddon addonType="prepend">
+                            <InputGroupText>
+                              <i className="ni ni-email-83" />
+                            </InputGroupText>
+                          </InputGroupAddon>
+                          <Input
+                            placeholder="Field Of Work"
+                            type="text"
+                            onChange={(event)=>this.changeInputHandler(event,'fieldOfWork')}
+                          />
+                        </InputGroup>
+                      </FormGroup>
+                    </Col>
+                    <Col md="6">
+                      <FormGroup className="mb-3">
+                        <InputGroup className="input-group-alternative">
+                          <InputGroupAddon addonType="prepend">
+                            <InputGroupText>
+                              <i className="ni ni-email-83" />
+                            </InputGroupText>
+                          </InputGroupAddon>
+                          <Input
+                            placeholder="Gender"
+                            type="text"
+                            onChange={(event)=>this.changeInputHandler(event,'gender')}
+                          />
+                        </InputGroup>
+                      </FormGroup>
+                    </Col>
+                  </Row>
+                  
+                  <Row>
+                    <Col md="6">
+                      <FormGroup className="mb-3">
+                        <InputGroup className="input-group-alternative">
+                          <InputGroupAddon addonType="prepend">
+                            <InputGroupText>
+                              <i className="ni ni-email-83" />
+                            </InputGroupText>
+                          </InputGroupAddon>
+                          <Input
+                            placeholder="Phone Number"
+                            type="text"
+                            onChange={(event)=>this.changeInputHandler(event,'phoneNumber')}
+                          />
+                        </InputGroup>
+                      </FormGroup>
+                    </Col>
+                    <Col md="6">
+                    <FormGroup className="mb-3">
+                        <InputGroup className="input-group-alternative">
+                          <InputGroupAddon addonType="prepend">
+                            <InputGroupText>
+                              <i className="ni ni-email-83" />
+                            </InputGroupText>
+                          </InputGroupAddon>
+                          <Input
+                            placeholder="Religion"
+                            type="text"
+                            onChange={(event)=>this.changeInputHandler(event,'religion')}
+                          />
+                        </InputGroup>
+                      </FormGroup></Col>
+                  </Row>
+                  <Row>
+                    <Col md="6">
+                      <FormGroup className="mb-3">
+                        <InputGroup className="input-group-alternative">
+                          <InputGroupAddon addonType="prepend">
+                            <InputGroupText>
+                              <i className="ni ni-email-83" />
+                            </InputGroupText>
+                          </InputGroupAddon>
+                          <Input
+                            placeholder="Marital Status"
+                            type="text"
+                            onChange={(event)=>this.changeInputHandler(event,'maritalStatus')}
+                          />
+                        </InputGroup>
+                      </FormGroup>
+                    </Col>
+                    <Col md="6">
+                      <FormGroup className="mb-3">
+                        <InputGroup className="input-group-alternative">
+                          <InputGroupAddon addonType="prepend">
+                            <InputGroupText>
+                              <i className="ni ni-email-83" />
+                            </InputGroupText>
+                          </InputGroupAddon>
+                          <Input
+                            placeholder="Children Number"
+                            type="text"
+                            onChange={(event)=>this.changeInputHandler(event,'childrenNumber')}
+                          />
+                        </InputGroup>
+                      </FormGroup>
+                    </Col>
+                  </Row>
+                  
+                      
+
+                      <FormGroup>
+                        <InputGroup>
+                      <TagsInput
+                        onlyUnique
+                        className="bootstrap-tagsinput"
+                        onChange={this.changeHobbiesHandler}
+                        value={this.state.person.hobbies}
+                        tagProps={{ className: "tag badge mr-1" }}
+                        inputProps={{
+                          className: "",
+                          placeholder: "Hobbies"
+                        }}
+                      />
+                      </InputGroup>
+                      </FormGroup>
+                      
+                   
+                  
                   <div className="text-center">
                     <Button
                       onClick={(e) => this.submitFormHandler(e)}
