@@ -40,7 +40,6 @@ class AllPeopleHeader extends React.Component {
     },
   };
   toggleModal = (state) => {
-    console.log(this.state);
     this.setState({
       [state]: !this.state[state],
     });
@@ -73,7 +72,6 @@ class AllPeopleHeader extends React.Component {
     this.setState({
       person: person,
     });
-    console.log(this.state.person);
   };
   changeDobHandler = (date) => {
     const person = this.state.person;
@@ -84,10 +82,7 @@ class AllPeopleHeader extends React.Component {
   };
 
   submitFormHandler = (event) => {
-    const person = this.state.person;
-    const people = this.props.allPeople.state.people;
-    people.push(person);
-    this.props.allPeople.setState({ people: people });
+    this.props.addPerson(this.state.person);
     this.toggleModal("formModal");
     const defaultPerson = {
       firstName: "",
@@ -99,12 +94,6 @@ class AllPeopleHeader extends React.Component {
       dateOfBirth: moment("2010-10-20 4:30", "YYYY-MM-DD HH:mm"),
     };
     this.setState({ person: defaultPerson });
-    console.log(person);
-    axios.post(`http://localhost:5000/api/customers`,{person})
-        .then(res => {
-          console.log(res);
-          console.log(res.data);
-        })
     
   };
   render() {

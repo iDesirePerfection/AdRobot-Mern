@@ -22,3 +22,7 @@ export const getCustomers = () => async dispatch =>{
         });
     }
 }
+
+export const addCustomer = (customer) => async dispatch =>{
+    
+}

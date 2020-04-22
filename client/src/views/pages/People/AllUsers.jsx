@@ -1,10 +1,11 @@
 import React from "react";
-import PropTypes from 'prop-types';
-import { getCustomers } from '../../../actions/customer'
-import { connect } from 'react-redux';
-import axios from 'axios';
-import Moment from 'react-moment';
-import { useHistory } from 'react-router-dom';
+import PropTypes from "prop-types";
+import { getCustomers } from "../../../actions/customer";
+import { connect } from "react-redux";
+import axios from "axios";
+import Moment from "react-moment";
+import { useHistory } from "react-router-dom";
+import Person from "./Person";
 
 import {
   Button,
@@ -47,25 +48,52 @@ class AllUsers extends React.Component {
   //   ],
   // };
   constructor(props) {
-    super(props)
-           this.state = {
-            people: []
-          }
-        };
-    componentDidMount() {
-      axios.get(`http://localhost:5000/api/customers`)
-        .then(res => {
-          const people = res.data;
-          this.setState({ people });
-        })
-    } 
-  async addPersonHandler(person) {
-    //console.log(person);
-    console.log(this.state.people);
-    // people.push(person);
-    // this.setState({ people: people });
-    // console.log(this.state.people);
+    super(props);
+    this.state = {
+      people: [],
+    };
   }
+  componentDidMount() {
+    axios.get(`http://localhost:5000/api/customers`).then((res) => {
+      const people = res.data;
+      this.setState({ people });
+    });
+  }
+  addPersonHandler = (person) => {
+    //  const people = [
+    //    ...this.state.people
+    //  ];
+    //  people.push(person);
+    //  this.setState({people:people});
+
+    const finalPerson = {
+      firstName: person.firstName,
+      lastName: person.lastName,
+      email: person.lastName,
+      DateOfBirth: person.dateOfBirth.format("MM/DD/YYYY"),
+    };
+    console.log(finalPerson);
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    try {
+      axios
+        .post(`http://localhost:5000/api/customers`, { finalPerson }, config)
+        .then((res) => {
+          console.log(res);
+          console.log(res.data);
+        })
+        .then(rej=>{
+          console.log(rej);
+        })
+    }
+    catch(error) {
+      console.log('error');
+      console.log(error);
+    }
+  };
 
   viewCustomerHandler() {
     // let path = `/profile`;
@@ -76,7 +104,7 @@ class AllUsers extends React.Component {
     return (
       <>
         <AllPeopleHeader
-          allPeople={this}
+          addPerson={this.addPersonHandler}
           name="All Users"
           parentName="People"
         />
@@ -96,41 +124,11 @@ class AllUsers extends React.Component {
               <tbody>
                 {this.state.people.map((person) => {
                   return (
-                    
-                    <tr onClick={this.viewCustomerHandler} key={person._id} className="table-">
-                      <td className="table-user">
-                        <b>{person.firstName + " " + person.lastName}</b>
-                      </td>
-                      <td>
-                        <span className="text-muted">{person.email}</span>
-                      </td>
-                      <td>
-                        <a
-                          className="font-weight-bold"
-                          href="#pablo"
-                          onClick={(e) => e.preventDefault()}
-                        >
-                          {person.address.city}
-                        </a>
-                      </td>
-                      <td>
-                        <span className="text-muted">
-                        <Moment format="YYYY/MM/DD">{person.dateOfBirth}</Moment>
-                        </span>
-                      </td>
-                      <td>
-                        <Button
-                          className="btn-round btn-icon"
-                          color="danger"
-                          href="#pablo"
-                          size="sm"
-                        >
-                          <span className="btn-inner--icon mr-1">
-                            <i className="fas fa-trash" />
-                          </span>
-                        </Button>
-                      </td>
-                    </tr>
+                    <Person
+                      key={person._id}
+                      person={person}
+                      clicked={this.viewCustomerHandler}
+                    ></Person>
                   );
                 })}
               </tbody>
