@@ -74,14 +74,15 @@ router.post(
 // @route   GET api/offer
 // @desc    Get all offers by provider
 // @access  PRIVATE 
-router.get('/', auth, async (req, res) => {
+router.get('/', async (req, res) => {
     try {
-        let agent = await Agent.findById(req.agent.id);
-        console.log(agent.firstName);
+        // let agent = await Agent.findById(req.agent.id);
+        // console.log(agent.firstName);
 
-        let provider = await Provider.findOne({ name: agent.company });
-        console.log(provider.name);
-        const offers = await Offre.find({ provider: provider.id }).populate('providers', ['name', 'email']);
+        // let provider = await Provider.findOne({ name: agent.company });
+        // console.log(provider.name);
+        // const offers = await Offre.find({ provider: provider.id }).populate('providers', ['name', 'email']);
+        const offers = await Offre.find();
         res.json(offers);
     } catch (error) {
         console.error(error.message);

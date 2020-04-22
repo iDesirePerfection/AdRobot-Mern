@@ -41,6 +41,7 @@ import Vector from "views/pages/maps/Vector.jsx";
 import Widgets from "views/pages/Widgets.jsx";
 import AllUsers from "./views/pages/People/AllUsers.jsx";
 import NewUserFormModal from "./views/pages/components/NewUserFormModal.jsx";
+import AllOffers from "./views/pages/offers/AllOffers.jsx";
 
 const routes = [
   {
@@ -123,7 +124,7 @@ const routes = [
       {
         path: "/offers/all",
         name: "All",
-        component: AllUsers,
+        component: AllOffers,
         layout: "/admin",
       },
     ],

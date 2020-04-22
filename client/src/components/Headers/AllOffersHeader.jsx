@@ -24,13 +24,13 @@ import {
 } from "reactstrap";
 import moment from "moment";
 
-class AllPeopleHeader extends React.Component {
+class AllOffersHeader extends React.Component {
   constructor(props) {
     super(props);
   }
   state = {
-    person: {
-      firstName: "",
+    offer: {
+      title: "",
       lastName: "",
       email: "",
       address:{
@@ -144,7 +144,7 @@ class AllPeopleHeader extends React.Component {
                     color="default"
                     size="sm"
                   >
-                    New User
+                    New Offer
                   </Button>
                 </Col>
               </Row>
@@ -264,9 +264,9 @@ class AllPeopleHeader extends React.Component {
   }
 }
 
-AllPeopleHeader.propTypes = {
+AllOffersHeader.propTypes = {
   name: PropTypes.string,
   parentName: PropTypes.string,
 };
 
-export default AllPeopleHeader;
+export default AllOffersHeader;

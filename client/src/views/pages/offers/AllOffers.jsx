@@ -15,10 +15,10 @@ import {
   Col,
   UncontrolledTooltip,
 } from "reactstrap";
-import AllPeopleHeader from "components/Headers/AllPeopleHeader.jsx";
+import AllOffersHeader from "components/Headers/AllOffersHeader.jsx";
 import moment from "moment";
 
-class AllUsers extends React.Component {
+class AllOffers extends React.Component {
   // state = {
   //   people: [
   //     {
@@ -47,16 +47,17 @@ class AllUsers extends React.Component {
   constructor(props) {
     super(props)
            this.state = {
-            people: []
+            offers: []
           }
         };
     componentDidMount() {
-      axios.get(`http://localhost:5000/api/customers`)
+      axios.get(`http://localhost:5000/api/offer`)
         .then(res => {
-          const people = res.data;
-          this.setState({ people });
+          const offers = res.data;
+          this.setState({ offers });
         })
     } 
+
   async addPersonHandler(person) {
     //console.log(person);
     console.log(this.state.people);
@@ -64,13 +65,22 @@ class AllUsers extends React.Component {
     // this.setState({ people: people });
     // console.log(this.state.people);
   }
+  deleteOffer(offerId){
+      console.log(offerId);
+      axios.delete(`http://localhost:5000/api/offer/${offerId}`)
+      .then(res =>{
+        console.log(res);
+        console.log(res.data);
+      });
+  }
+
   render() {
     return (
       <>
-        <AllPeopleHeader
-          allPeople={this}
-          name="All Users"
-          parentName="People"
+        <AllOffersHeader
+          alloffers={this}
+          name="All Offers"
+          parentName="Offers"
         />
 
         <Container className="mt--6" fluid>
@@ -78,22 +88,23 @@ class AllUsers extends React.Component {
             <Table className="align-items-center table-flush" hover responsive>
               <thead className="thead-light">
                 <tr>
-                  <th>Full Name</th>
-                  <th>Email</th>
-                  <th>Address</th>
-                  <th>Date Of Birth</th>
+                  <th>Title</th>
+                  <th>Description</th>
+                  <th>Field</th>
+                  <th>Available from</th>
+                  <th>Expiry date</th>
                   <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
-                {this.state.people.map((person) => {
+                {this.state.offers.map((offer) => {
                   return (
                     <tr className="table-">
                       <td className="table-user">
-                        <b>{person.firstName + " " + person.lastName}</b>
+                        <b>{offer.title}</b>
                       </td>
                       <td>
-                        <span className="text-muted">{person.email}</span>
+                        <span className="text-muted">{offer.description}</span>
                       </td>
                       <td>
                         <a
@@ -101,12 +112,17 @@ class AllUsers extends React.Component {
                           href="#pablo"
                           onClick={(e) => e.preventDefault()}
                         >
-                          {person.address.city}
+                          {offer.field}
                         </a>
                       </td>
                       <td>
                         <span className="text-muted">
-                        <Moment format="YYYY/MM/DD">{person.dateOfBirth}</Moment>
+                        <Moment format="YYYY/MM/DD">{offer.from}</Moment>
+                        </span>
+                      </td>
+                      <td>
+                        <span className="text-muted">
+                        <Moment format="YYYY/MM/DD">{offer.to}</Moment>
                         </span>
                       </td>
                       <td>
@@ -115,6 +131,7 @@ class AllUsers extends React.Component {
                           color="danger"
                           href="#pablo"
                           size="sm"
+                          onClick={()=> this.deleteOffer(offer._id)}
                         >
                           <span className="btn-inner--icon mr-1">
                             <i className="fas fa-trash" />
@@ -133,12 +150,12 @@ class AllUsers extends React.Component {
   }
 }
 
-// AllUsers.propTypes = {
+// AllOffers.propTypes = {
 //   getCustomers: PropTypes.func.isRequired,
 //   customer: PropTypes.object.isRequired
 // }
 // const mapStateToProps = state => ({
 //   customer: state.customer
 // })
-// export default connect(mapStateToProps, { getCustomers })(AllUsers);
-export default AllUsers;
+// export default connect(mapStateToProps, { getCustomers })(AllOffers);
+export default AllOffers;
