@@ -101,7 +101,12 @@ class AllOffersHeader extends React.Component {
 
     const offer = this.state.offer;
     console.log(offer);
+
+    const offers = this.props.alloffers.state.offers;
+    offers.push(offer);
+    this.props.alloffers.setState({ offers: offers });
     this.toggleModal("formModal");
+
     const defaultOffer = {
       itle: "",
       description: "",

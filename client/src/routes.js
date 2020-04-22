@@ -77,7 +77,7 @@ const routes = [
       },
       {
         path: "/people/view",
-        name: "New",
+        name: "view",
         component: Profile,
         layout: "/admin",
       },
@@ -193,6 +193,13 @@ const routes = [
     component: Register,
     layout: "/auth",
   },
+  {
+          path: "/profile",
+          name: "Profile",
+          component: Profile,
+          layout: "/admin"
+  },
+
   //     {
   //       path: "/lock",
   //       name: "Lock",

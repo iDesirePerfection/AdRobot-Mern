@@ -4,6 +4,7 @@ import { getCustomers } from '../../../actions/customer'
 import { connect } from 'react-redux';
 import axios from 'axios';
 import Moment from 'react-moment';
+import { useHistory } from 'react-router-dom';
 
 import {
   Button,
@@ -17,6 +18,7 @@ import {
 } from "reactstrap";
 import AllPeopleHeader from "components/Headers/AllPeopleHeader.jsx";
 import moment from "moment";
+import { Redirect } from "react-router";
 
 class AllUsers extends React.Component {
   // state = {
@@ -64,6 +66,12 @@ class AllUsers extends React.Component {
     // this.setState({ people: people });
     // console.log(this.state.people);
   }
+
+  viewCustomerHandler() {
+    // let path = `/profile`;
+    // let history = useHistory();
+    // history.push(path);
+  }
   render() {
     return (
       <>
@@ -88,7 +96,8 @@ class AllUsers extends React.Component {
               <tbody>
                 {this.state.people.map((person) => {
                   return (
-                    <tr className="table-">
+                    
+                    <tr onClick={this.viewCustomerHandler} key={person._id} className="table-">
                       <td className="table-user">
                         <b>{person.firstName + " " + person.lastName}</b>
                       </td>

@@ -12,8 +12,9 @@ const Agent = require('../../models/Agent');
 // @desc    Test route
 // @access  Public 
 router.get('/', auth, async (req, res) => {
+    
     try {
-        res.header("Access-Control-Allow-Origin", "localhost");
+       
         const agent = await Agent.findById(req.agent.id).select('-password');
 
         res.json(agent);
@@ -44,7 +45,9 @@ router.post('/', [
         const { email, password } = req.body;
 
         try {
-            res.header("Access-Control-Allow-Origin", "localhost");
+            res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+            res.header("Access-Control-Allow-Methods", "POST");
+            res.header("Access-Control-Allow-Credentials", "true");
             //See if agent exists
             let agent = await Agent.findOne({ email });
             if (!agent) {

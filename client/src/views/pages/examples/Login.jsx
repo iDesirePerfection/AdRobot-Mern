@@ -41,7 +41,7 @@ const Login = ({ login, isAuthenticated }) => {
     login(email, password);
   };
   if (isAuthenticated) {
-    return <Redirect to="/admin/dashboard"></Redirect>
+    return <Redirect to="/admin/people/all-users"></Redirect>
   }
 
 
