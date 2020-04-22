@@ -60,32 +60,43 @@ class AllUsers extends React.Component {
     });
   }
   addPersonHandler = (person) => {
+
+    //Construct The person object
     const finalPerson = {
       firstName: person.firstName,
       lastName: person.lastName,
       email: person.email,
       DateOfBirth: person.dateOfBirth.format("MM/DD/YYYY"),
       city: person.address.city,
+      fieldOfWork:person.fieldOfWork,
+      gender:person.gender,
+      religion:person.religion,
+      // hobbies:person.hobbies,
+      phoneNumber:person.phoneNumber,
+      maritalStatus:person.maritalStatus,
+      ChildrenNumber:person.childrenNumber
     };
 
-    try {
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      };
-      const body = JSON.stringify(finalPerson);
-      axios
-        .post("http://localhost:5000/api/customers", body, config)
-        .then((res) => {
-          const people = [...this.state.people];
+    //config for axios post request
+
+    const config = {
+          headers: {
+            "Content-Type": "application/json",
+          }
+        }
+
+    // axios post request to add or update user to database
+    axios.post("http://localhost:5000/api/customers", finalPerson, config).then(res=> {
+    // change person state immutably
+      const people = [...this.state.people];
           people.push(res.data);
           this.setState({ people: people });
-          console.log(res.data);
-        });
-    } catch (error) {
-      console.error(error.response.data);
-    }
+          console.log(this.state.people);
+    })
+    .catch(error => {
+      //handling post request errors
+        console.log(error.response);
+    });
   };
 
   viewCustomerHandler() {

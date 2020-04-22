@@ -76,7 +76,6 @@ class AllPeopleHeader extends React.Component {
     }
     updatedPerson[inputIdentifier] = event.target.value;
     this.setState({person:updatedPerson});
-    console.log(updatedPerson);
   }
 
   changeHobbiesHandler = hobbies => {
@@ -91,16 +90,17 @@ class AllPeopleHeader extends React.Component {
   submitFormHandler = (event) => {
     this.props.addPerson(this.state.person);
     this.toggleModal("formModal");
-    const defaultPerson = {
-      firstName: "",
-      lastName: "",
-      email: "",
-      address: {
-        city: "",
-      },
-      dateOfBirth: moment("2010-10-20 4:30", "YYYY-MM-DD HH:mm"),
-    };
-    this.setState({ person: defaultPerson });
+
+    // const defaultPerson = {
+    //   firstName: "",
+    //   lastName: "",
+    //   email: "",
+    //   address: {
+    //     city: "",
+    //   },
+    //   dateOfBirth: moment("2010-10-20 4:30", "YYYY-MM-DD HH:mm"),
+    // };
+    // this.setState({ person: defaultPerson });
   };
   render() {
     return (
