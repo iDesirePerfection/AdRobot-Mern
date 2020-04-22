@@ -1,8 +1,6 @@
-import React, { Component } from 'react';
-import Moment from 'react-moment';
-import {
-  Button,
-} from "reactstrap";
+import React, { Component } from "react";
+import Moment from "react-moment";
+import { Button } from "reactstrap";
 class Person extends Component {
   constructor(props) {
     super(props);
@@ -10,11 +8,12 @@ class Person extends Component {
   }
 
   render() {
-    
     return (
-      <tr onClick={this.props.clicked} className="table-">
+      <tr className="table-">
         <td className="table-user">
-          <b>{this.props.person.firstName + " " + this.props.person.lastName}</b>
+          <b>
+            {this.props.person.firstName + " " + this.props.person.lastName}
+          </b>
         </td>
         <td>
           <span className="text-muted">{this.props.person.email}</span>
@@ -25,7 +24,6 @@ class Person extends Component {
             href="#pablo"
             onClick={(e) => e.preventDefault()}
           >
-
             {this.props.person.address.city}
           </a>
         </td>
@@ -36,12 +34,22 @@ class Person extends Component {
         </td>
         <td>
           <Button
+            onClick={this.props.viewClicked}
             className="btn-round btn-icon"
-            color="danger"
-            href="#pablo"
+            color="primary"
             size="sm"
           >
-            <span className="btn-inner--icon mr-1">
+            <span className="btn-inner--icon">
+              <i className="fas fa-eye" />
+            </span>
+          </Button>
+          <Button
+          onClick={this.props.deleteClicked}
+            className="btn-round btn-icon"
+            color="danger"
+            size="sm"
+          >
+            <span className="btn-inner--icon">
               <i className="fas fa-trash" />
             </span>
           </Button>

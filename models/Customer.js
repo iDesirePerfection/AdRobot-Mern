@@ -30,7 +30,7 @@ const CustomerSchema = new Schema({
         }
 
     },
-    DateOfBirth: {
+    dateOfBirth: {
         type: Date,
         required: true
     },
@@ -52,12 +52,18 @@ const CustomerSchema = new Schema({
     maritalStatus: {
         type: String
     },
-    ChildrenNumber: {
+    childrenNumber: {
         type: Number
     },
     loginHistory: {
         type: String,
         default: Date.now
+    },
+    tags: {
+        type:[{}]
+    },
+    facebookId: {
+        type:String
     }
 });
 module.exports = Customer = mongoose.model('customer', CustomerSchema);

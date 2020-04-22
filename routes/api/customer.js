@@ -11,7 +11,7 @@ router.post('/', [
     check('firstName', 'firstname is required').not().isEmpty(),
     check('lastName', 'lastname is required').not().isEmpty(),
     check('email', 'email is required').isEmail(),
-    check('DateOfBirth', 'DateOfBirth is required').not().isEmpty()
+    check('dateOfBirth', 'dateOfBirth is required').not().isEmpty()
 ],
     async (req, res) => {
         const errors = validationResult(req);
@@ -29,14 +29,14 @@ router.post('/', [
             country,
             street,
             postalCode,
-            DateOfBirth,
+            dateOfBirth,
             fieldOfWork,
             gender,
             religion,
             hobbies,
             phoneNumber,
             maritalStatus,
-            ChildrenNumber
+            childrenNumber
 
         } = req.body;
 
@@ -47,7 +47,7 @@ router.post('/', [
         if (lastName) customerFields.lastName = lastName;
         if (email) customerFields.email = email;
 
-        if (DateOfBirth) customerFields.DateOfBirth = DateOfBirth;
+        if (dateOfBirth) customerFields.dateOfBirth = dateOfBirth;
         if (fieldOfWork) customerFields.fieldOfWork = fieldOfWork;
         if (gender) customerFields.gender = gender;
         if (religion) customerFields.religion = religion;
@@ -57,7 +57,7 @@ router.post('/', [
 
         if (phoneNumber) customerFields.phoneNumber = phoneNumber;
         if (maritalStatus) customerFields.maritalStatus = maritalStatus;
-        if (ChildrenNumber) customerFields.ChildrenNumber = ChildrenNumber;
+        if (childrenNumber) customerFields.childrenNumber = childrenNumber;
 
 
         customerFields.address = {};
@@ -134,7 +134,7 @@ router.put('/update/:user_id', [
     check('firstName', 'firstname is required').not().isEmpty(),
     check('lastName', 'lastname is required').not().isEmpty(),
     check('email', 'email is required').isEmail(),
-    check('DateOfBirth', 'DateOfBirth is required').not().isEmpty()
+    check('dateOfBirth', 'DateOfBirth is required').not().isEmpty()
 ],
     async (req, res) => {
         const errors = validationResult(req);
@@ -150,7 +150,7 @@ router.put('/update/:user_id', [
             country,
             street,
             postalCode,
-            DateOfBirth,
+            dateOfBirth,
             fieldOfWork,
             gender,
             religion,
@@ -167,7 +167,7 @@ router.put('/update/:user_id', [
         if (lastName) customerFields.lastName = lastName;
         if (email) customerFields.email = email;
 
-        if (DateOfBirth) customerFields.DateOfBirth = DateOfBirth;
+        if (dateOfBirth) customerFields.dateOfBirth = dateOfBirth;
         if (fieldOfWork) customerFields.fieldOfWork = fieldOfWork;
         if (gender) customerFields.gender = gender;
         if (religion) customerFields.religion = religion;
@@ -206,7 +206,8 @@ router.put('/update/:user_id', [
 // @access  private 
 router.delete('/:user_id', async (req, res) => {
     try {
-        await Customer.findOneAndRemove({ user: req.params.user_id });
+        console.log(req.params.user_id);
+        await Customer.findOneAndRemove({ _id: req.params.user_id });
         res.json({ message: 'user removed ' });
     } catch (error) {
         console.error(error.message);

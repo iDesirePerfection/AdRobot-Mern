@@ -39,9 +39,10 @@ import Typography from "views/pages/components/Typography.jsx";
 import Validation from "views/pages/forms/Validation.jsx";
 import Vector from "views/pages/maps/Vector.jsx";
 import Widgets from "views/pages/Widgets.jsx";
-import AllUsers from "./views/pages/People/AllUsers.jsx";
+import AllPeople from "./views/pages/People/AllPeople.jsx";
 import NewUserFormModal from "./views/pages/components/NewUserFormModal.jsx";
 import AllOffers from "./views/pages/offers/AllOffers.jsx";
+import ViewPerson from "./views/pages/People/ViewPerson.jsx";
 
 const routes = [
   {
@@ -53,7 +54,7 @@ const routes = [
       {
         path: "/people/all-users",
         name: "All users",
-        component: AllUsers,
+        component: AllPeople,
         layout: "/admin",
       },
       {
@@ -76,12 +77,6 @@ const routes = [
         layout: "/admin",
       },
       {
-        path: "/people/view",
-        name: "view",
-        component: Profile,
-        layout: "/admin",
-      },
-      {
         path: "/people/slipping-away",
         name: "Slipping away",
         component: Buttons,
@@ -98,7 +93,7 @@ const routes = [
       {
         path: "/outbound/all",
         name: "All",
-        component: AllUsers,
+        component: AllPeople,
         layout: "/admin",
       },
       {
@@ -125,20 +120,6 @@ const routes = [
         path: "/offers/all",
         name: "All",
         component: AllOffers,
-        layout: "/admin",
-      },
-    ],
-  },
-  {
-    collapse: true,
-    name: "Settings",
-    icon: "fas fa-cogs text-default",
-    state: "settingsCollapse",
-    views: [
-      {
-        path: "/settings",
-        name: "All",
-        component: AllUsers,
         layout: "/admin",
       },
     ],
@@ -194,10 +175,10 @@ const routes = [
     layout: "/auth",
   },
   {
-          path: "/profile",
-          name: "Profile",
-          component: Profile,
-          layout: "/admin"
+    path: "/customer",
+    name: "Customer",
+    component: ViewPerson,
+    layout: "/admin"
   },
 
   //     {

@@ -2,7 +2,6 @@ import React from "react";
 // nodejs library to set properties for components
 import PropTypes from "prop-types";
 import ReactDatetime from "react-datetime";
-import axios from "axios";
 import TagsInput from "react-tagsinput";
 // reactstrap components
 import {
@@ -23,7 +22,6 @@ import {
   InputGroup,
   Modal,
 } from "reactstrap";
-import moment from "moment";
 
 class AllPeopleHeader extends React.Component {
   constructor(props) {
