@@ -27,6 +27,8 @@ router.post('/', [
             email,
             city,
             country,
+            street,
+            postalCode,
             DateOfBirth,
             fieldOfWork,
             gender,
@@ -60,8 +62,10 @@ router.post('/', [
 
         customerFields.address = {};
         if (city) customerFields.address.city = city;
-        if (country) customerFields.country = country;
-
+        if (country) customerFields.address.country = country;
+        if (postalCode) customerFields.address.postalCode = postalCode;
+        if (street) customerFields.address.street = street;
+        
         try {
             let customer = await Customer.findOne({ email });
             if (customer) {
@@ -98,6 +102,28 @@ router.get('/', async (req, res) => {
         res.json(customers);
     } catch (error) {
         console.error(error.message);
+        res.status(500).send('server error');
+    }
+});
+// @route   GET api/customer/:user_id
+// @desc    Get profile by user id
+// @access  PUBLIC 
+router.get('/:user_id', async (req, res) => {
+    try {
+        const customer = await Customer.findById(req.params.user_id);
+
+        if (!customer) {
+            return res.status(400).json({ message: 'there is no customer for this user id' });
+
+        }
+
+        res.json(customer);
+    } catch (error) {
+        console.error(error.message);
+        if (error.kind == 'ObjectId') {
+            return res.status(400).json({ message: 'customer not found' });
+
+        }
         res.status(500).send('server error');
     }
 });

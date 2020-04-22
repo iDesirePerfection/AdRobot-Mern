@@ -40,8 +40,8 @@ router.post(
         try {
             //See if provider exists
             let agent = await Agent.findById(req.agent.id);
-            let provider1 = await Provider.findOne({ name: agent.company });
-            if (!provider1) {
+            let provider = await Provider.findOne({ name: agent.company });
+            if (!provider) {
 
                 return res.status(400).json({ errors: [{ msg: "provider doesn't exist" }] });
             }
@@ -49,24 +49,23 @@ router.post(
             if (offer) {
                 return res.status(400).json({ errors: [{ msg: "offre already exist" }] });
             }
-            let provider = provider1.id;
-            console.log(provider);
-            offer = new Offre({
-                provider,
-                title,
-                description,
-                field,
-                from,
-                to,
-                minimumPrice,
-                discount
-            });
 
+            const offreFields = {};
+            offreFields.provider = provider.id;
+            if (title) offreFields.title = title;
+            if (description) offreFields.description = description;
+            if (field) offreFields.field = field;
+            if (from) offreFields.from = from;
+            if (to) offreFields.to = to;
+            if (minimumPrice) offreFields.minimumPrice = minimumPrice;
+            if (discount) offreFields.discount = discount;
+
+            offer = new Offre(offreFields);
             await offer.save();
-            res.json(offre);
+            res.json(offer);
 
         } catch (err) {
-            console.log(err.message);
+            console.error(err.message);
             res.status(500).send("server error");
         }
     }
