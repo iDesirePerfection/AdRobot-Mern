@@ -59,23 +59,15 @@ class AllUsers extends React.Component {
       this.setState({ people });
     });
   }
-  addPersonHandler = async person => {
-    //  const people = [
-    //    ...this.state.people
-    //  ];
-    //  people.push(person);
-    //  this.setState({people:people});
-
+  addPersonHandler = (person) => {
     const finalPerson = {
       firstName: person.firstName,
       lastName: person.lastName,
       email: person.email,
       DateOfBirth: person.dateOfBirth.format("MM/DD/YYYY"),
-      city: person.address.city
+      city: person.address.city,
     };
 
-    console.log(finalPerson);
-    this.componentDidMount();
     try {
       const config = {
         headers: {
@@ -83,11 +75,15 @@ class AllUsers extends React.Component {
         },
       };
       const body = JSON.stringify(finalPerson);
-      const res = await axios.post('http://localhost:5000/api/customers', body, config);
-      console.log(res.data);
-
-    }
-    catch (error) {
+      axios
+        .post("http://localhost:5000/api/customers", body, config)
+        .then((res) => {
+          const people = [...this.state.people];
+          people.push(res.data);
+          this.setState({ people: people });
+          console.log(res.data);
+        });
+    } catch (error) {
       console.error(error.response.data);
     }
   };
