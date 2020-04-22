@@ -13,6 +13,7 @@ const Agent = require('../../models/Agent');
 // @access  Public 
 router.get('/', auth, async (req, res) => {
     try {
+        res.header("Access-Control-Allow-Origin", "localhost");
         const agent = await Agent.findById(req.agent.id).select('-password');
 
         res.json(agent);

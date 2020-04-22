@@ -19,31 +19,6 @@ import AllOffersHeader from "components/Headers/AllOffersHeader.jsx";
 import moment from "moment";
 
 class AllOffers extends React.Component {
-  // state = {
-  //   people: [
-  //     {
-  //       firstName: "Fahd",
-  //       lastName: "Chargui",
-  //       email: "fahd.charugi@esprit.tn",
-  //       address: "01 rue gabes ariana",
-  //       dateOfBirth: moment("2010-10-20 4:30", "YYYY-MM-DD HH:mm"),
-  //     },
-  //     {
-  //       firstName: "test",
-  //       lastName: "Chargui",
-  //       email: "fahd.charugi@esprit.tn",
-  //       address: "01 rue gabes ariana",
-  //       dateOfBirth: moment("2010-10-20 4:30", "YYYY-MM-DD HH:mm"),
-  //     },
-  //     {
-  //       firstName: "Fahd",
-  //       lastName: "Chargui",
-  //       email: "fahd.charugi@esprit.tn",
-  //       address: "01 rue gabes ariana",
-  //       dateOfBirth: moment("2010-10-20 4:30", "YYYY-MM-DD HH:mm"),
-  //     },
-  //   ],
-  // };
   constructor(props) {
     super(props)
            this.state = {
@@ -59,11 +34,8 @@ class AllOffers extends React.Component {
     } 
 
   async addPersonHandler(person) {
-    //console.log(person);
     console.log(this.state.people);
-    // people.push(person);
-    // this.setState({ people: people });
-    // console.log(this.state.people);
+    
   }
   deleteOffer(offerId){
       console.log(offerId);

@@ -31,12 +31,12 @@ class AllOffersHeader extends React.Component {
   state = {
     offer: {
       title: "",
-      lastName: "",
-      email: "",
-      address:{
-        city:""
-      },
-      dateOfBirth: "",
+      description: "",
+      field: "",
+      from: "",
+      to: "",
+      minimumPrice: '',
+      discount: ''
     },
   };
   toggleModal = (state) => {
@@ -46,66 +46,85 @@ class AllOffersHeader extends React.Component {
     });
   };
 
-  changeFirstNameHandler = (event) => {
-    const person = this.state.person;
-    person.firstName = event.target.value;
+  changeTitleHandler = (event) => {
+    const offer = this.state.offer;
+    offer.title = event.target.value;
     this.setState({
-      person: person,
+      offer: offer,
     });
   };
-  changeLastNameHandler = (event) => {
-    const person = this.state.person;
-    person.lastName = event.target.value;
+  changeDescriptionHandler = (event) => {
+    const offer = this.state.offer;
+    offer.description = event.target.value;
     this.setState({
-      person: person,
+      offer: offer,
     });
   };
-  changeEmailHandler = (event) => {
-    const person = this.state.person;
-    person.email = event.target.value;
+  changeFieldHandler = (event) => {
+    const offer = this.state.offer;
+    offer.field = event.target.value;
     this.setState({
-      person: person,
+      offer: offer,
     });
   };
-  changeAddressHandler = (event) => {
-    const person = this.state.person;
-    person.address.city = event.target.value;
+  changeMinHandler = (event) => {
+    const offer = this.state.offer;
+    offer.minimumPrice = event.target.value;
     this.setState({
-      person: person,
+      offer: offer,
     });
-    console.log(this.state.person);
   };
-  changeDobHandler = (date) => {
-    const person = this.state.person;
-    person.dateOfBirth = date;
+  changeDiscountHandler = (event) => {
+    const offer = this.state.offer;
+    offer.discount = event.target.value;
     this.setState({
-      person: person,
+      offer: offer,
+    });
+  };
+  changeFromHandler = (event) => {
+    const offer = this.state.offer;
+    offer.from = event.target.value;
+    this.setState({
+      offer: offer,
+    });
+
+  };
+  changeToHandler = (event) => {
+    const offer = this.state.offer;
+    offer.to = event.target.value;
+    this.setState({
+      offer: offer,
     });
   };
 
   submitFormHandler = (event) => {
-    const person = this.state.person;
-    const people = this.props.allPeople.state.people;
-    people.push(person);
-    this.props.allPeople.setState({ people: people });
+
+    const offer = this.state.offer;
+    console.log(offer);
     this.toggleModal("formModal");
-    const defaultPerson = {
-      firstName: "",
-      lastName: "",
-      email: "",
-      address:{
-        city:""
-      },
-      dateOfBirth: moment("2010-10-20 4:30", "YYYY-MM-DD HH:mm"),
+    const defaultOffer = {
+      itle: "",
+      description: "",
+      field: "",
+      from: "",
+      to: "",
+      minimumPrice: '',
+      discount: ''
     };
-    this.setState({ person: defaultPerson });
-    console.log(person);
-    axios.post(`http://localhost:5000/api/customers`,{person})
-        .then(res => {
-          console.log(res);
-          console.log(res.data);
-        })
-    
+    this.setState({ offer: defaultOffer });
+    console.log(offer);
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+    const body = JSON.stringify({ offer });
+    axios.post(`http://localhost:5000/api/offers`, body, config)
+      .then(res => {
+        console.log(res);
+        console.log(res.data);
+      })
+
   };
   render() {
     return (
@@ -162,7 +181,7 @@ class AllOffersHeader extends React.Component {
             <Card className="bg-secondary shadow border-0">
               <CardHeader className="bg-transparent pb-5">
                 <div className="text-muted text-center mt-2 mb-3">
-                  <small>Add a new user</small>
+                  <small>Add a new Offer</small>
                 </div>
               </CardHeader>
               <CardBody className="px-lg-5 py-lg-5">
@@ -177,9 +196,9 @@ class AllOffersHeader extends React.Component {
                             </InputGroupText>
                           </InputGroupAddon>
                           <Input
-                            placeholder="First Name"
+                            placeholder="Title"
                             type="text"
-                            onChange={this.changeFirstNameHandler}
+                            onChange={this.changeTitleHandler}
                           />
                         </InputGroup>
                       </FormGroup>
@@ -193,9 +212,9 @@ class AllOffersHeader extends React.Component {
                             </InputGroupText>
                           </InputGroupAddon>
                           <Input
-                            placeholder="Last Name"
+                            placeholder="Description"
                             type="text"
-                            onChange={this.changeLastNameHandler}
+                            onChange={this.changeDescriptionHandler}
                           />
                         </InputGroup>
                       </FormGroup>
@@ -211,9 +230,9 @@ class AllOffersHeader extends React.Component {
                             </InputGroupText>
                           </InputGroupAddon>
                           <Input
-                            placeholder="Email"
+                            placeholder="Field"
                             type="text"
-                            onChange={this.changeEmailHandler}
+                            onChange={this.changeFieldHandler}
                           />
                         </InputGroup>
                       </FormGroup>
@@ -227,22 +246,61 @@ class AllOffersHeader extends React.Component {
                             </InputGroupText>
                           </InputGroupAddon>
                           <Input
-                            placeholder="Address"
-                            type="text"
-                            onChange={this.changeAddressHandler}
+                            placeholder="From"
+                            type="date"
+                            onChange={this.changeFromHandler}
                           />
                         </InputGroup>
                       </FormGroup>
                     </Col>
                   </Row>
-                  <FormGroup>
-                    <ReactDatetime
-                      inputProps={{
-                        placeholder: "Date Of Birth",
-                      }}
-                      timeFormat={false}
-                      onChange={this.changeDobHandler}
-                    />
+                  <Row>
+                    <Col md="6">
+                      <FormGroup className="mb-3">
+                        <InputGroup className="input-group-alternative">
+                          <InputGroupAddon addonType="prepend">
+                            <InputGroupText>
+                              <i className="ni ni-email-83" />
+                            </InputGroupText>
+                          </InputGroupAddon>
+                          <Input
+                            placeholder="Minimum Price "
+                            type="text"
+                            onChange={this.changeMinHandler}
+                          />
+                        </InputGroup>
+                      </FormGroup>
+                    </Col>
+                    <Col md="6">
+                      <FormGroup className="mb-3">
+                        <InputGroup className="input-group-alternative">
+                          <InputGroupAddon addonType="prepend">
+                            <InputGroupText>
+                              <i className="ni ni-email-83" />
+                            </InputGroupText>
+                          </InputGroupAddon>
+                          <Input
+                            placeholder="Discount"
+                            type="text"
+                            onChange={this.changeDiscountHandler}
+                          />
+                        </InputGroup>
+                      </FormGroup>
+                    </Col>
+                  </Row>
+                  <FormGroup className="mb-3">
+                    <InputGroup className="input-group-alternative">
+                      <InputGroupAddon addonType="prepend">
+                        <InputGroupText>
+                          <i className="ni ni-email-83" />
+                        </InputGroupText>
+                      </InputGroupAddon>
+                      <Input
+                        placeholder="to"
+                        type="date"
+                        onChange={this.changeToHandler}
+                      />
+                    </InputGroup>
                   </FormGroup>
                   <div className="text-center">
                     <Button
