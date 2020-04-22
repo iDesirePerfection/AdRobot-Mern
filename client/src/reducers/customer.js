@@ -13,8 +13,7 @@ export default function (state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
-    case CUSTOMER_ADDED:
-        
+    case CUSTOMER_ADDED:   
     case GET_CUSTOMERS:
       return {
         ...state,

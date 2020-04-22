@@ -59,7 +59,7 @@ class AllUsers extends React.Component {
       this.setState({ people });
     });
   }
-  addPersonHandler = (person) => {
+  addPersonHandler = async person => {
     //  const people = [
     //    ...this.state.people
     //  ];
@@ -69,29 +69,26 @@ class AllUsers extends React.Component {
     const finalPerson = {
       firstName: person.firstName,
       lastName: person.lastName,
-      email: person.lastName,
+      email: person.email,
       DateOfBirth: person.dateOfBirth.format("MM/DD/YYYY"),
+      city: person.address.city
     };
+
     console.log(finalPerson);
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
+    this.componentDidMount();
     try {
-      axios
-        .post(`http://localhost:5000/api/customers`, { finalPerson }, config)
-        .then((res) => {
-          console.log(res);
-          console.log(res.data);
-        })
-        .then(rej=>{
-          console.log(rej);
-        })
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      const body = JSON.stringify(finalPerson);
+      const res = await axios.post('http://localhost:5000/api/customers', body, config);
+      console.log(res.data);
+
     }
-    catch(error) {
-      console.log('error');
-      console.log(error);
+    catch (error) {
+      console.error(error.response.data);
     }
   };
 

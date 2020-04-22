@@ -34,7 +34,7 @@ class AllOffers extends React.Component {
     } 
 
   async addPersonHandler(person) {
-    console.log(this.state.people);
+    
     
   }
   deleteOffer(offerId){

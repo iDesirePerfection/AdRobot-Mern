@@ -6,23 +6,19 @@ import {
 } from './types'
 
 //get customers
-export const getCustomers = () => async dispatch =>{
-    try{
+export const getCustomers = () => async dispatch => {
+    try {
         const res = await axios.get('http://localhost:5000/api/customers')
-        
+
         dispatch({
-            type:GET_CUSTOMERS,
+            type: GET_CUSTOMERS,
             payload: res.data
         });
-    
-    }catch(err){
+
+    } catch (err) {
         dispatch({
-            type:CUSTOMER_ERROR,
-            payload: {msg: err.response.statusText, status: err.response.status}
+            type: CUSTOMER_ERROR,
+            payload: { msg: err.response.statusText, status: err.response.status }
         });
     }
-}
-
-export const addCustomer = (customer) => async dispatch =>{
-    
-}
+};
