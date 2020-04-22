@@ -65,7 +65,7 @@ router.post('/', [
         if (country) customerFields.address.country = country;
         if (postalCode) customerFields.address.postalCode = postalCode;
         if (street) customerFields.address.street = street;
-        
+
         try {
             let customer = await Customer.findOne({ email });
             if (customer) {
@@ -105,7 +105,7 @@ router.get('/', async (req, res) => {
         res.status(500).send('server error');
     }
 });
-// @route   GET api/customer/:user_id
+// @route   GET api/customers/:user_id
 // @desc    Get profile by user id
 // @access  PUBLIC 
 router.get('/:user_id', async (req, res) => {
@@ -124,6 +124,92 @@ router.get('/:user_id', async (req, res) => {
             return res.status(400).json({ message: 'customer not found' });
 
         }
+        res.status(500).send('server error');
+    }
+});
+// @route   GET api/customers/:user_id
+// @desc    Get profile by user id
+// @access  PUBLIC 
+router.put('/update/:user_id', [
+    check('firstName', 'firstname is required').not().isEmpty(),
+    check('lastName', 'lastname is required').not().isEmpty(),
+    check('email', 'email is required').isEmail(),
+    check('DateOfBirth', 'DateOfBirth is required').not().isEmpty()
+],
+    async (req, res) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+
+        const {
+            firstName,
+            lastName,
+            email,
+            city,
+            country,
+            street,
+            postalCode,
+            DateOfBirth,
+            fieldOfWork,
+            gender,
+            religion,
+            hobbies,
+            phoneNumber,
+            maritalStatus,
+            ChildrenNumber
+        } = req.body;
+
+       
+        const customerFields = {};
+
+        if (firstName) customerFields.firstName = firstName;
+        if (lastName) customerFields.lastName = lastName;
+        if (email) customerFields.email = email;
+
+        if (DateOfBirth) customerFields.DateOfBirth = DateOfBirth;
+        if (fieldOfWork) customerFields.fieldOfWork = fieldOfWork;
+        if (gender) customerFields.gender = gender;
+        if (religion) customerFields.religion = religion;
+        if (hobbies) customerFields.hobbies = hobbies;
+
+        if (phoneNumber) customerFields.phoneNumber = phoneNumber;
+        if (maritalStatus) customerFields.maritalStatus = maritalStatus;
+        if (ChildrenNumber) customerFields.ChildrenNumber = ChildrenNumber;
+
+        customerFields.address = {};
+        if (city) customerFields.address.city = city;
+        if (country) customerFields.address.country = country;
+        if (postalCode) customerFields.address.postalCode = postalCode;
+        if (street) customerFields.address.street = street;
+
+        try {
+            let customer = await Customer.findById(req.params.user_id);
+            if (!customer) {
+                return res.status(400).json({ message: 'there is no customer for this user id' });
+            }
+            customer = await Customer.findByIdAndUpdate(
+                { _id: req.params.user_id },
+                { $set: customerFields },
+                { new: true }
+            );
+            console.log("updated");
+            res.json(customer);
+        } catch (error) {
+            console.error(error.message);
+            return res.status(500).send('server error');
+        }
+    }
+);
+// @route   DELETE api/customers
+// @desc    delete profile, user & posts
+// @access  private 
+router.delete('/:user_id', async (req, res) => {
+    try {
+        await Customer.findOneAndRemove({ user: req.params.user_id });
+        res.json({ message: 'user removed ' });
+    } catch (error) {
+        console.error(error.message);
         res.status(500).send('server error');
     }
 });
