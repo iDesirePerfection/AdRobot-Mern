@@ -52,7 +52,7 @@ router.post('/', [
         if (gender) customerFields.gender = gender;
         if (religion) customerFields.religion = religion;
         if (hobbies) {
-            customerFields.hobbies = hobbies.split(',').map(hobbies => hobbies.trim());
+            customerFields.hobbies = hobbies;
         };
 
         if (phoneNumber) customerFields.phoneNumber = phoneNumber;
