@@ -13,7 +13,7 @@ app.use((req,res,next)=> {
     res.setHeader('Access-Control-Allow-Origin','*');
     res.setHeader(
         'Access-Control-Allow-Headers',
-        'Origin, X-Requested-Width, Content-Type, Accept, Authorisation'
+        'Origin, X-Requested-Width, Content-Type, Accept, Authorisation, X-Auth-Token'
     );
     res.setHeader(
         'Access-Control-Allow-Methods',

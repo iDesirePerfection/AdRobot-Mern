@@ -37,6 +37,7 @@ router.post('/', [
         'password is required').exists()
 ],
     async (req, res) => {
+        
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() });
@@ -45,9 +46,6 @@ router.post('/', [
         const { email, password } = req.body;
 
         try {
-            res.header("Access-Control-Allow-Origin", "http://localhost:3000");
-            res.header("Access-Control-Allow-Methods", "POST");
-            res.header("Access-Control-Allow-Credentials", "true");
             //See if agent exists
             let agent = await Agent.findOne({ email });
             if (!agent) {
