@@ -43,6 +43,8 @@ import AllPeople from "./views/pages/People/AllPeople.jsx";
 import NewUserFormModal from "./views/pages/components/NewUserFormModal.jsx";
 import AllOffers from "./views/pages/offers/AllOffers.jsx";
 import ViewPerson from "./views/pages/People/ViewPerson.jsx";
+import test from "./views/pages/People/test.jsx";
+import Posts from "./views/pages/offers/Posts.jsx";
 
 const routes = [
   {
@@ -60,7 +62,7 @@ const routes = [
       {
         path: "/people/new-user",
         name: "new user",
-        component: NewUserFormModal,
+        component: test,
         layout: "/admin",
       },
 
@@ -115,13 +117,19 @@ const routes = [
     name: "Offers",
     icon: "fas fa-map-signs text-danger",
     state: "offersCollapse",
-    views: [
+    views: [   
       {
         path: "/offers/all",
         name: "All",
         component: AllOffers,
         layout: "/admin",
       },
+      {
+        path: "/offers/posts",
+        name: "Posts",
+        component: Posts,
+        layout: "/admin",
+      }
     ],
   },
   // {
