@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Dropzone from "dropzone";
 import axios from "axios";
+import token from '../../../context/TokenContext';
 import {
   Button,
   Form,
@@ -15,8 +16,6 @@ class test extends Component {
     super(props);
     this.state = {
       selectedFile: null,
-      token:
-        "EAAlK1ycigTUBABUEt3AiuqYr4kyyUQf7ijcShgzdcjzi0qk9puhjnc4UmUs0VR4O98EtwsxoXFiKMyuvGXwhZCvyrn3ZBuKnnfdDaPUcInJv7khZCLIqKYxZAW7jC86VgU4BjP1dx4yo0hfKzU3MPfFNEXPzICRj4VqOzRzn5UoZAnZBKr635dDNVHebDaY1Rxeiql6vXd8MPhXZA4uYyGP",
     };
   }
 
@@ -35,7 +34,7 @@ class test extends Component {
     data.append("message", "hello world");
     axios
       .post(
-        `https://graph.facebook.com/v6.0/100773638277656/photos?access_token=${this.state.token}`,
+        `https://graph.facebook.com/v6.0/100773638277656/photos?access_token=${token}`,
         data,
         {}
       )
