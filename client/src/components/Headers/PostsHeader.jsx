@@ -2,7 +2,7 @@ import React from "react";
 // nodejs library to set properties for components
 import PropTypes from "prop-types";
 import axios from "axios";
-import token from "../../context/TokenContext";
+import accessInfo from "../../context/TokenContext";
 // reactstrap components
 import {
   Breadcrumb,
@@ -79,7 +79,7 @@ class PostsHeader extends React.Component {
     this.setState({loading:true})
     axios
       .post(
-        `https://graph.facebook.com/v6.0/100773638277656/photos?access_token=${token}`,
+        `https://graph.facebook.com/v6.0/100773638277656/photos?access_token=${accessInfo.pageToken}`,
         data,
         {}
       )
@@ -92,7 +92,7 @@ class PostsHeader extends React.Component {
         console.log(error);
         this.setState({loading:false});
         this.toggleModal('formModal');
-        // this.props.postPublished(null);
+         this.props.postPublished(null);
       });
   };
 
@@ -199,7 +199,7 @@ class PostsHeader extends React.Component {
                             height: "15rem",
                             marginTop: "1rem",
                             textAlign: "center",
-                            border: "1px solid black",
+                            border: "1px solid #dee2e6",
                             borderRadius: "5%",
                           }}
                         >

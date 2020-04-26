@@ -45,6 +45,7 @@ import AllOffers from "./views/pages/offers/AllOffers.jsx";
 import ViewPerson from "./views/pages/People/ViewPerson.jsx";
 import test from "./views/pages/People/test.jsx";
 import Posts from "./views/pages/offers/Posts.jsx";
+import Ads from "./views/pages/outbound/Ads.jsx";
 
 const routes = [
   {
@@ -93,9 +94,9 @@ const routes = [
     state: "outboundCollapse",
     views: [
       {
-        path: "/outbound/all",
-        name: "All",
-        component: AllPeople,
+        path: "/outbound/ads",
+        name: "Ads",
+        component: Ads,
         layout: "/admin",
       },
       {
