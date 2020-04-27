@@ -30,7 +30,7 @@ class Ads extends React.Component {
     };
   }
   componentDidMount() {
-    // get ads
+    //get ads
     axios
       .get(
         `https://graph.facebook.com/v6.0/${accessInfo.sandboxAdId}/ads?fields=adset_id,creative,name&access_token=${accessInfo.sandboxAdToken}`
@@ -73,11 +73,16 @@ class Ads extends React.Component {
       .catch((error) => {});
   }
 
+  adPublishedHandler = () => {
+    this.setState({loading:true});
+    this.componentDidMount();
+  }
+
   render() {
     return this.state.loading ? (
       <>
         <AdsHeader
-          postPublished={this.postPublishedHandler}
+          adPublished={this.adPublishedHandler}
           name="Ads"
           parentName="Outbound"
         />
@@ -92,7 +97,7 @@ class Ads extends React.Component {
     ) : (
       <>
         <AdsHeader
-          postPublished={this.postPublishedHandler}
+          adPublished={this.adPublishedHandler}
           name="Ads"
           parentName="Outbound"
         />
