@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from 'axios';
 import accessInfo from "../../../context/TokenContext";
+import AdBlockDetect from 'react-ad-block-detect';
 import {
   Card,
   CardImg,
@@ -120,6 +121,9 @@ class Ad extends Component {
                   __html: this.state.previewUrl,
                 }}
               />
+              <AdBlockDetect>
+                <h1 className="h1" color="primary">Ad block Detected, please disable ad block on this site and refrech the page to be able to see the preview</h1>
+            </AdBlockDetect>
             </Modal>
           </CardBody>
         </Card>
