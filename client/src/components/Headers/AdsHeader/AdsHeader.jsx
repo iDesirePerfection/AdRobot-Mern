@@ -40,11 +40,12 @@ class AdsHeader extends Component {
     selectedCampaign: null,
     selectedAdSet: null,
     selectedPost: null,
-    adName:'',
-    postId: 'Select a Post',
+    adName: "",
+    postId: "Select a Post",
     formHeader: "Select a campaign",
     posts: [],
     checked: false,
+    publishingAd: false,
   };
 
   toggleModal = (state) => {
@@ -53,9 +54,7 @@ class AdsHeader extends Component {
     });
   };
 
-
   componentDidMount() {
-      
     axios
       .get(
         `https://graph.facebook.com/v6.0/${accessInfo.sandboxAdId}/campaigns?fields=name,objective,status&access_token=${accessInfo.sandboxAdToken}`
@@ -83,9 +82,9 @@ class AdsHeader extends Component {
   };
   changeAdSetHandler = (selectedAdSet) => {
     this.setState({ selectedAdSet }, () =>
-    console.log(`Option selected:`, this.state.selectedAdSet)
-  );
-  }
+      console.log(`Option selected:`, this.state.selectedAdSet)
+    );
+  };
   nextStepHandler = () => {
     switch (this.state.step) {
       case 1:
@@ -110,31 +109,35 @@ class AdsHeader extends Component {
     this.setState({ checked: !this.state.checked });
   };
   changeAdNameHandler = (event) => {
-      this.setState({adName: event.target.value});
-  }
+    this.setState({ adName: event.target.value });
+  };
   selectHandler = (post) => {
-    this.setState({selectedPost:post});
-    this.setState({postId:post.id});
-
+    this.setState({ selectedPost: post });
+    this.setState({ postId: post.id });
   };
 
-  publishAdHander = () =>{
+  publishAdHander = () => {
+    this.setState({ publishingAd: true });
     axios
-        .post(`https://graph.facebook.com/v6.0/${accessInfo.sandboxAdId}/adcreatives?name=${this.state.adName} creative&object_story_id=${this.state.postId}&access_token=${accessInfo.sandboxAdToken}`)
-        .then(createCreativeResponse => {
-            console.log(createCreativeResponse.data.id);
-            axios
-                .post(`https://graph.facebook.com/v6.0/${accessInfo.sandboxAdId}/ads?name=${this.state.adName}&adset_id=${this.state.selectedAdSet.value}&creative={"creative_id":${createCreativeResponse.data.id}}&status=ACTIVE&access_token=${accessInfo.sandboxAdToken}`)
-                .then(adCreateResponse => {
-                    this.props.adPublished();
-                    this.toggleModal('formModal');
-                })
-                .catch(error=> {
-                    console.log(error);
-                }) 
-        })
-
-  }
+      .post(
+        `https://graph.facebook.com/v6.0/${accessInfo.sandboxAdId}/adcreatives?name=${this.state.adName} creative&object_story_id=${this.state.postId}&access_token=${accessInfo.sandboxAdToken}`
+      )
+      .then((createCreativeResponse) => {
+        console.log(createCreativeResponse.data.id);
+        axios
+          .post(
+            `https://graph.facebook.com/v6.0/${accessInfo.sandboxAdId}/ads?name=${this.state.adName}&adset_id=${this.state.selectedAdSet.value}&creative={"creative_id":${createCreativeResponse.data.id}}&status=ACTIVE&access_token=${accessInfo.sandboxAdToken}`
+          )
+          .then((adCreateResponse) => {
+            this.setState({ publishingAd: false });
+            this.props.adPublished();
+            this.toggleModal("formModal");
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      });
+  };
   render() {
     const { selectedCampaign } = this.state;
     const { selectedAdSet } = this.state;
@@ -321,15 +324,19 @@ class AdsHeader extends Component {
               marginTop: "1rem",
             }}
           >
-            <Button
-              className="pull-right"
-              size="sm"
-              color="primary"
-              type="button"
-              onClick={this.publishAdHander}
-            >
-              Publish Ad
-            </Button>
+            {this.state.publishingAd ? (
+              <div className="loader"> </div>
+            ) : (
+              <Button
+                className="pull-right"
+                size="sm"
+                color="primary"
+                type="button"
+                onClick={this.publishAdHander}
+              >
+                Publish Ad
+              </Button>
+            )}
           </div>
         </Form>
       </>

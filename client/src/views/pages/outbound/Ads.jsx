@@ -37,7 +37,6 @@ class Ads extends React.Component {
       )
       .then((res) => {
         res.data.data.map((ad) => {
-          console.log(ad);
           // get ad set info
           axios
             .get(
@@ -65,18 +64,29 @@ class Ads extends React.Component {
                       updatedAdInfo.push(oneAdInfo);
                       this.setState({ adInfo: updatedAdInfo });
                       this.setState({ loading: false });
+                    })
+                    .catch((error) => {
+                      console.log(error);
                     });
+                })
+                .catch((error) => {
+                  console.log(error);
                 });
+            })
+            .catch((error) => {
+              console.log(error);
             });
         });
       })
-      .catch((error) => {});
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   adPublishedHandler = () => {
-    this.setState({loading:true});
+    this.setState({ loading: true });
     this.componentDidMount();
-  }
+  };
 
   render() {
     return this.state.loading ? (
