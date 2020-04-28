@@ -55,7 +55,7 @@ class AdsHeader extends Component {
     formHeader: "Select a campaign",
     posts: [],
     checked: false,
-    publishing: false,
+    publishingAd: false,
   };
 
   toggleModal = (state) => {
@@ -126,7 +126,7 @@ class AdsHeader extends Component {
   };
 
   publishAdHander = () => {
-    this.setState({ publishing: true });
+    this.setState({ publishingAd: true });
     axios
       .post(
         `https://graph.facebook.com/v6.0/${accessInfo.sandboxAdId}/adcreatives?name=${this.state.adName} creative&object_story_id=${this.state.postId}&access_token=${accessInfo.sandboxAdToken}`
@@ -138,9 +138,9 @@ class AdsHeader extends Component {
             `https://graph.facebook.com/v6.0/${accessInfo.sandboxAdId}/ads?name=${this.state.adName}&adset_id=${this.state.selectedAdSet.value}&creative={"creative_id":${createCreativeResponse.data.id}}&status=ACTIVE&access_token=${accessInfo.sandboxAdToken}`
           )
           .then((adCreateResponse) => {
+            this.setState({ publishingAd: false });
             this.props.adPublished();
             this.toggleModal("formModal");
-            this.setState({ publishing: false });
           })
           .catch((error) => {
             console.log(error);
@@ -499,8 +499,8 @@ class AdsHeader extends Component {
               marginTop: "1rem",
             }}
           >
-            {this.state.publishing ? (
-              <div className="loader"></div>
+            {this.state.publishingAd ? (
+              <div className="loader"> </div>
             ) : (
               <Button
                 className="pull-right"

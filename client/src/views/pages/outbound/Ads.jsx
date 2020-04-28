@@ -31,52 +31,62 @@ class Ads extends React.Component {
   }
   componentDidMount() {
     //get ads
-    // axios
-    //   .get(
-    //     `https://graph.facebook.com/v6.0/${accessInfo.sandboxAdId}/ads?fields=adset_id,creative,name&access_token=${accessInfo.sandboxAdToken}`
-    //   )
-    //   .then((res) => {
-    //     res.data.data.map((ad) => {
-    //       console.log(ad);
+    axios
+      .get(
+        `https://graph.facebook.com/v6.0/${accessInfo.sandboxAdId}/ads?fields=adset_id,creative,name&access_token=${accessInfo.sandboxAdToken}`
+      )
+      .then((res) => {
+        res.data.data.map((ad) => {
           // get ad set info
-      //     axios
-      //       .get(
-      //         `https://graph.facebook.com/v6.0/${ad.adset_id}?fields=name,lifetime_budget,start_time,end_time,bid_amount,billing_event,optimization_goal,targeting,status&access_token=${accessInfo.sandboxAdToken}`
-      //       )
-      //       .then((r) => {
-      //         axios
-      //           .get(
-      //             `https://graph.facebook.com/v6.0/${ad.creative.id}?fields=object_story_id&access_token=${accessInfo.sandboxAdToken}`
-      //           )
-      //           .then((creativeRes) => {
-      //             let postId = creativeRes.data.object_story_id.split("_");
-      //             axios
-      //               .get(
-      //                 `https://graph.facebook.com/v6.0/${postId[1]}?fields=images&access_token=${accessInfo.sandboxAdToken}`
-      //               )
-      //               .then((postResponse) => {
-      //                 // update state with ads info and its adset
-      //                 const updatedAdInfo = [...this.state.adInfo];
-      //                 let oneAdInfo = {
-      //                   ad: ad,
-      //                   adSetInfo: r.data,
-      //                   imageUrl: postResponse.data.images[0].source,
-      //                 };
-      //                 updatedAdInfo.push(oneAdInfo);
-      //                 this.setState({ adInfo: updatedAdInfo });
-      //                 this.setState({ loading: false });
-      //               });
-      //           });
-      //       });
-      //   });
-      // })
-      // .catch((error) => {});
+          axios
+            .get(
+              `https://graph.facebook.com/v6.0/${ad.adset_id}?fields=name,lifetime_budget,start_time,end_time,bid_amount,billing_event,optimization_goal,targeting,status&access_token=${accessInfo.sandboxAdToken}`
+            )
+            .then((r) => {
+              axios
+                .get(
+                  `https://graph.facebook.com/v6.0/${ad.creative.id}?fields=object_story_id&access_token=${accessInfo.sandboxAdToken}`
+                )
+                .then((creativeRes) => {
+                  let postId = creativeRes.data.object_story_id.split("_");
+                  axios
+                    .get(
+                      `https://graph.facebook.com/v6.0/${postId[1]}?fields=images&access_token=${accessInfo.sandboxAdToken}`
+                    )
+                    .then((postResponse) => {
+                      // update state with ads info and its adset
+                      const updatedAdInfo = [...this.state.adInfo];
+                      let oneAdInfo = {
+                        ad: ad,
+                        adSetInfo: r.data,
+                        imageUrl: postResponse.data.images[0].source,
+                      };
+                      updatedAdInfo.push(oneAdInfo);
+                      this.setState({ adInfo: updatedAdInfo });
+                      this.setState({ loading: false });
+                    })
+                    .catch((error) => {
+                      console.log(error);
+                    });
+                })
+                .catch((error) => {
+                  console.log(error);
+                });
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   adPublishedHandler = () => {
-    this.setState({loading:true});
+    this.setState({ loading: true });
     this.componentDidMount();
-  }
+  };
 
   render() {
     return this.state.loading ? (
