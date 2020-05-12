@@ -3,7 +3,8 @@ const auth = require('../../middleware/auth');
 const Customer = require('../../models/Customer');
 const router = express.Router();
 const { check, validationResult } = require('express-validator');
-
+var querystring = require('querystring');
+var url = require('url');
 // @route   POST api/customers
 // @desc    Create or update customer 
 // @access  Public 
@@ -215,5 +216,9 @@ router.delete('/:user_id', async (req, res) => {
         console.error(error.message);
         res.status(500).send('server error');
     }
+});
+
+router.get('/name', (req, res) => {
+    res.json("hello")
 });
 module.exports = router;

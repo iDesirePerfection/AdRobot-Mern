@@ -33,7 +33,7 @@ const OfferSchema = new Schema({
     },
     discount: {
         type: Number,
-        required: true
+       
     }
 });
 
