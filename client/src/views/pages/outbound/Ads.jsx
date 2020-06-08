@@ -49,25 +49,34 @@ class Ads extends React.Component {
                 )
                 .then((creativeRes) => {
                   let postId = creativeRes.data.object_story_id.split("_");
-                  axios
-                    .get(
-                      `https://graph.facebook.com/v6.0/${postId[1]}?fields=images&access_token=${accessInfo.sandboxAdToken}`
-                    )
-                    .then((postResponse) => {
-                      // update state with ads info and its adset
-                      const updatedAdInfo = [...this.state.adInfo];
-                      let oneAdInfo = {
-                        ad: ad,
-                        adSetInfo: r.data,
-                        imageUrl: postResponse.data.images[0].source,
-                      };
-                      updatedAdInfo.push(oneAdInfo);
-                      this.setState({ adInfo: updatedAdInfo });
-                      this.setState({ loading: false });
-                    })
-                    .catch((error) => {
-                      console.log(error);
-                    });
+                  const updatedAdInfo = [...this.state.adInfo];
+                  let oneAdInfo = {
+                    ad: ad,
+                    adSetInfo: r.data,
+                    // imageUrl: postResponse.data.images[0].source,
+                  };
+                  updatedAdInfo.push(oneAdInfo);
+                  this.setState({ adInfo: updatedAdInfo });
+                  this.setState({ loading: false });
+                  // axios
+                  //   .get(
+                  //     `https://graph.facebook.com/v6.0/${postId[1]}?fields=images&access_token=${accessInfo.sandboxAdToken}`
+                  //   )
+                  //   .then((postResponse) => {
+                  //     // update state with ads info and its adset
+                  //     const updatedAdInfo = [...this.state.adInfo];
+                  //     let oneAdInfo = {
+                  //       ad: ad,
+                  //       adSetInfo: r.data,
+                  //       // imageUrl: postResponse.data.images[0].source,
+                  //     };
+                  //     updatedAdInfo.push(oneAdInfo);
+                  //     this.setState({ adInfo: updatedAdInfo });
+                  //     this.setState({ loading: false });
+                  //   })
+                  //   .catch((error) => {
+                  //     console.log(error);
+                  //   });
                 })
                 .catch((error) => {
                   console.log(error);
