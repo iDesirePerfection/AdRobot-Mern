@@ -171,24 +171,24 @@ const routes = [
   //       component: Pricing,
   //       layout: "/auth"
   //     },
-  // {
-  //   path: "/login",
-  //   name: "Login",
-  //   component: Login,
-  //   layout: "/auth",
-  // },
-  // {
-  //   path: "/register",
-  //   name: "Register",
-  //   component: Register,
-  //   layout: "/auth",
-  // },
-  // {
-  //   path: "/customer",
-  //   name: "Customer",
-  //   component: ViewPerson,
-  //   layout: "/admin"
-  // },
+  {
+    path: "/login",
+    name: "Login",
+    component: Login,
+    // layout: "/auth",
+  },
+  {
+    path: "/register",
+    name: "Register",
+    component: Register,
+    layout: "/auth",
+  },
+  {
+    path: "/customer",
+    name: "Customer",
+    component: ViewPerson,
+    layout: "/admin"
+  },
 
   //     {
   //       path: "/lock",
