@@ -218,7 +218,5 @@ router.delete('/:user_id', async (req, res) => {
     }
 });
 
-router.get('/name', (req, res) => {
-    res.json("hello")
-});
+
 module.exports = router;

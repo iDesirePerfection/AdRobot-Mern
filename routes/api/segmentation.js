@@ -25,6 +25,12 @@ const segmentation = param => {
 
 
 
+    //FOR AIRLINE
+
+
+
+
+
 
 
     classifier.train();
