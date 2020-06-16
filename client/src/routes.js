@@ -46,6 +46,7 @@ import ViewPerson from "./views/pages/People/ViewPerson.jsx";
 import test from "./views/pages/People/test.jsx";
 import Posts from "./views/pages/offers/Posts.jsx";
 import Ads from "./views/pages/outbound/Ads.jsx";
+import Automation from "./views/pages/offers/Automation.jsx";
 
 const routes = [
   {
@@ -129,6 +130,12 @@ const routes = [
         path: "/offers/posts",
         name: "Posts",
         component: Posts,
+        layout: "/admin",
+      },
+      {
+        path: "/offers/automation",
+        name: "Automation",
+        component: Automation,
         layout: "/admin",
       }
     ],

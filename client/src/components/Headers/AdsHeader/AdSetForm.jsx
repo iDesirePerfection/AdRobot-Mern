@@ -199,7 +199,10 @@ class AdSetForm extends Component {
             </Col>
           </Row>
           <Row>
-              targeting goes here literally the most important thing in this project
+            <Col lg="12">
+              <h2>Targeting:</h2>
+            <label className="form-control-label">Targeting:</label>
+              </Col>
           </Row>
           <div
             style={{

@@ -50,11 +50,11 @@ class Ad extends Component {
         
       <Col lg="4">
         <Card>
-          <CardImg
+          {/* <CardImg
             alt="..."
             src={this.props.oneAd.imageUrl}
             top
-          />
+          /> */}
 
           <CardBody>
             <CardTitle className="h2 mb-0">

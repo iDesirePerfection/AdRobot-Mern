@@ -36,7 +36,7 @@ class Ads extends React.Component {
         `https://graph.facebook.com/v6.0/${accessInfo.sandboxAdId}/ads?fields=adset_id,creative,name&access_token=${accessInfo.sandboxAdToken}`
       )
       .then((res) => {
-        res.data.data.map((ad) => {
+        res.data.data.forEach((ad) => {
           // get ad set info
           axios
             .get(
@@ -49,25 +49,35 @@ class Ads extends React.Component {
                 )
                 .then((creativeRes) => {
                   let postId = creativeRes.data.object_story_id.split("_");
-                  axios
-                    .get(
-                      `https://graph.facebook.com/v6.0/${postId[1]}?fields=images&access_token=${accessInfo.sandboxAdToken}`
-                    )
-                    .then((postResponse) => {
-                      // update state with ads info and its adset
-                      const updatedAdInfo = [...this.state.adInfo];
-                      let oneAdInfo = {
-                        ad: ad,
-                        adSetInfo: r.data,
-                        imageUrl: postResponse.data.images[0].source,
-                      };
-                      updatedAdInfo.push(oneAdInfo);
-                      this.setState({ adInfo: updatedAdInfo });
-                      this.setState({ loading: false });
-                    })
-                    .catch((error) => {
-                      console.log(error);
-                    });
+                  console.log(creativeRes.data);
+                  const updatedAdInfo = [...this.state.adInfo];
+                  let oneAdInfo = {
+                    ad: ad,
+                    adSetInfo: r.data,
+                    imageUrl: 'https://scontent.ftun4-1.fna.fbcdn.net/v/t1.0-9/95121103_118865726468447_5320380812250578944_n.jpg?_nc_cat=110&_nc_sid=8024bb&_nc_oc=AQk41uLynzLg8R7kwTOBsZrr2xHjGzm--uW6AUYewjoONlbgJGTkSkKM1k9dwlD3uss&_nc_ht=scontent.ftun4-1.fna&oh=56dc7ac95f6ffcc73343d2b385e91524&oe=5ED1145A'
+                  };
+                  updatedAdInfo.push(oneAdInfo);
+                  this.setState({ adInfo: updatedAdInfo });
+                  this.setState({ loading: false });
+                  // axios
+                  //   .get(
+                  //     `https://graph.facebook.com/v6.0/${postId[1]}?fields=images&access_token=${accessInfo.sandboxAdToken}`
+                  //   )
+                  //   .then((postResponse) => {
+                  //     // update state with ads info and its adset
+                  //     const updatedAdInfo = [...this.state.adInfo];
+                  //     let oneAdInfo = {
+                  //       ad: ad,
+                  //       adSetInfo: r.data,
+                  //       imageUrl: postResponse.data.images[0].source,
+                  //     };
+                  //     updatedAdInfo.push(oneAdInfo);
+                  //     this.setState({ adInfo: updatedAdInfo });
+                  //     this.setState({ loading: false });
+                  //   })
+                  //   .catch((error) => {
+                  //     console.log(error);
+                  //   });
                 })
                 .catch((error) => {
                   console.log(error);

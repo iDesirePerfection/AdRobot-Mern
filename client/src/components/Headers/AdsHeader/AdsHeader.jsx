@@ -33,16 +33,16 @@ class AdsHeader extends Component {
   constructor(props) {
     super(props);
   }
-  
+
   state = {
     newAdFormModal: false,
     campaigns: [],
     createNewCampaign: false,
     newCampaignForm: {
-      name:'',
-      objective:'',
-      status:'',
-      specialAdCategory:''
+      name: "",
+      objective: "",
+      status: "",
+      specialAdCategory: "",
     },
     adsets: [],
     createNewAdSet: false,
@@ -65,23 +65,13 @@ class AdsHeader extends Component {
   };
 
   componentDidMount() {
-    // axios
-    //   .get(
-    //     `https://graph.facebook.com/v6.0/${accessInfo.sandboxAdId}/campaigns?fields=name,objective,status&access_token=${accessInfo.sandboxAdToken}`
-    //   )
-    //   .then((campaignResponse) => {
-    //     this.setState({ campaigns: campaignResponse.data.data });
-    //   });
-    // axios
-    //   .get(
-    //     `https://graph.facebook.com/v6.0/100773638277656/posts?fields=attachments,created_time,admin_creator&access_token=${accessInfo.pageToken}`
-    //   )
-    //   .then((res) => {
-    //     this.setState({ posts: res.data.data });
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
+    axios
+      .get(
+        `https://graph.facebook.com/v6.0/${accessInfo.sandboxAdId}/campaigns?fields=name,objective,status&access_token=${accessInfo.sandboxAdToken}`
+      )
+      .then((campaignResponse) => {
+        this.setState({ campaigns: campaignResponse.data.data });
+      });
   }
 
   changeCampaignHandler = (selectedCampaign) => {
@@ -101,17 +91,35 @@ class AdsHeader extends Component {
         this.setState({ formHeader: "Select an adSet" });
         axios
           .get(
-            `https://graph.facebook.com/v6.0/${this.state.selectedCampaign.value}/adsets?fields=name,optimization_goal,status&access_token=${accessInfo.sandboxAdToken}`
+            `https://graph.facebook.com/v6.0/${this.state.selectedCampaign.value}/adsets?fields=name,optimization_goal,status,end_time&access_token=${accessInfo.sandboxAdToken}`
           )
           .then((adsetResponse) => {
-            this.setState({ adsets: adsetResponse.data.data }, () =>
+            const adSets = adsetResponse.data.data
+              .filter((adSet) => {
+                let endTime = new Date(adSet.end_time);
+                return endTime > Date.now();
+              })
+              .map((adSetFiltered) => {
+                return adSetFiltered;
+              });
+            this.setState({ adsets: adSets }, () =>
               console.log(this.state.adsets)
             );
           });
         break;
       case 2:
-        this.setState({ step: this.state.step + 1 });
-        this.setState({ formHeader: "Create An ad" });
+        axios
+          .get(
+            `https://graph.facebook.com/v6.0/100773638277656/posts?fields=attachments,created_time,admin_creator&access_token=${accessInfo.pageToken}`
+          )
+          .then((res) => {
+            this.setState({ posts: res.data.data });
+            this.setState({ step: this.state.step + 1 });
+            this.setState({ formHeader: "Create An ad" });
+          })
+          .catch((error) => {
+            console.log(error);
+          });
     }
   };
   changeCheckboxHandler = (event) => {
@@ -148,48 +156,54 @@ class AdsHeader extends Component {
       });
   };
 
-  newCampaignNameHandler = (event) =>{
-   const updatedCampaignForm = {
-     ...this.state.newCampaignForm
-   }
-
-   updatedCampaignForm.name=event.target.value;
-   this.setState({newCampaignForm: updatedCampaignForm});
-
-  }
-
-  newCampaignSelectHandler = (selectedObject,inputIdentifier) => {
+  newCampaignNameHandler = (event) => {
     const updatedCampaignForm = {
-      ...this.state.newCampaignForm
-    }
- 
-    updatedCampaignForm[inputIdentifier]= selectedObject;
-    this.setState({newCampaignForm: updatedCampaignForm},()=>console.log(this.state.newCampaignForm));
-  }
+      ...this.state.newCampaignForm,
+    };
+
+    updatedCampaignForm.name = event.target.value;
+    this.setState({ newCampaignForm: updatedCampaignForm });
+  };
+
+  newCampaignSelectHandler = (selectedObject, inputIdentifier) => {
+    const updatedCampaignForm = {
+      ...this.state.newCampaignForm,
+    };
+
+    updatedCampaignForm[inputIdentifier] = selectedObject;
+    this.setState({ newCampaignForm: updatedCampaignForm }, () =>
+      console.log(this.state.newCampaignForm)
+    );
+  };
 
   newCampaignSubmitHandler = () => {
     axios
-      .post(`https://graph.facebook.com/v6.0/${accessInfo.sandboxAdId}/campaigns?name=${this.state.newCampaignForm.name}&objective=${this.state.newCampaignForm.objective.value}&status=${this.state.newCampaignForm.status.value}&special_ad_category=${this.state.newCampaignForm.specialAdCategory.value}&access_token=${accessInfo.sandboxAdToken}`)
-      .then(newCampaignResponse => {
-        this.setState({selectedCampaign: {
-          label:'',
-          value:newCampaignResponse.data.id
-        }},()=>console.log(this.state.selectedCampaign));
+      .post(
+        `https://graph.facebook.com/v6.0/${accessInfo.sandboxAdId}/campaigns?name=${this.state.newCampaignForm.name}&objective=${this.state.newCampaignForm.objective.value}&status=${this.state.newCampaignForm.status.value}&special_ad_category=${this.state.newCampaignForm.specialAdCategory.value}&access_token=${accessInfo.sandboxAdToken}`
+      )
+      .then((newCampaignResponse) => {
+        this.setState(
+          {
+            selectedCampaign: {
+              label: "",
+              value: newCampaignResponse.data.id,
+            },
+          },
+          () => console.log(this.state.selectedCampaign)
+        );
         this.nextStepHandler();
-        console.log('seperator');
+        console.log("seperator");
         console.log(newCampaignResponse.data);
       })
-      .catch(error=> {
+      .catch((error) => {
         console.log(error);
       });
-  }
-
-
+  };
 
   render() {
     const { selectedCampaign } = this.state;
     const { selectedAdSet } = this.state;
-    const {newCampaignForm} = this.state;
+    const { newCampaignForm } = this.state;
 
     const step1 = (
       <>
@@ -200,86 +214,91 @@ class AdsHeader extends Component {
                 <Col lg="6">
                   <FormGroup className="mb-3">
                     <label className="form-control-label">Campaign Name</label>
-                    <InputGroup
-                      className={classnames("input-group-merge")}
-                    >
+                    <InputGroup className={classnames("input-group-merge")}>
                       <Input
                         placeholder="Campaign Name"
                         type="text"
-                         onChange={this.newCampaignNameHandler}
+                        onChange={this.newCampaignNameHandler}
                         value={newCampaignForm.name}
                       />
                     </InputGroup>
                   </FormGroup>
                 </Col>
                 <Col lg="6">
-                <label className="form-control-label">Objective</label>
-                      <Select
-                      placeholder="Objective"
-                        value={newCampaignForm.objective}
-                         onChange={(event)=>this.newCampaignSelectHandler(event,'objective')}
-                        options={[
-                          {
-                            value:"LINK_CLICKS",
-                            label:"Link Clicks"
-                          },
-                          {
-                            value:"POST_ENGAGEMENT",
-                            label:"Post Engagement"
-                          },
-                          {
-                            value:"PAGE_LIKES",
-                            label:"Page Likes"
-                          },
-                        ]}
-                      />
+                  <label className="form-control-label">Objective</label>
+                  <Select
+                    placeholder="Objective"
+                    value={newCampaignForm.objective}
+                    onChange={(event) =>
+                      this.newCampaignSelectHandler(event, "objective")
+                    }
+                    options={[
+                      {
+                        value: "LINK_CLICKS",
+                        label: "Link Clicks",
+                      },
+                      {
+                        value: "POST_ENGAGEMENT",
+                        label: "Post Engagement",
+                      },
+                      {
+                        value: "PAGE_LIKES",
+                        label: "Page Likes",
+                      },
+                    ]}
+                  />
                 </Col>
               </Row>
               <Row>
-              <Col lg="6">
-                <label className="form-control-label">Status</label>
-                      <Select
-                      placeholder="Objective"
-                        value={newCampaignForm.status}
-                         onChange={(event)=>this.newCampaignSelectHandler(event,'status')}
-                        options={[
-                          {
-                            value:"ACTIVE",
-                            label:"Active"
-                          },
-                          {
-                            value:"PAUSED",
-                            label:"Paused"
-                          }
-                        ]}
-                      />
+                <Col lg="6">
+                  <label className="form-control-label">Status</label>
+                  <Select
+                    placeholder="Objective"
+                    value={newCampaignForm.status}
+                    onChange={(event) =>
+                      this.newCampaignSelectHandler(event, "status")
+                    }
+                    options={[
+                      {
+                        value: "ACTIVE",
+                        label: "Active",
+                      },
+                      {
+                        value: "PAUSED",
+                        label: "Paused",
+                      },
+                    ]}
+                  />
                 </Col>
                 <Col lg="6">
-                <label className="form-control-label">Special Ad Category</label>
-                      <Select
-                      placeholder="Objective"
-                        value={newCampaignForm.specialAdCategory}
-                         onChange={(event)=>this.newCampaignSelectHandler(event,'specialAdCategory')}
-                        options={[
-                          {
-                            value:"NONE",
-                            label:"None"
-                          },
-                          {
-                            value:"HOUSING",
-                            label:"Housing"
-                          },
-                          {
-                            value:"CREDIT",
-                            label:"Credit"
-                          },
-                          {
-                            value:"EMPLOYMENT",
-                            label:"Employment"
-                          }
-                          
-                        ]}
-                      />
+                  <label className="form-control-label">
+                    Special Ad Category
+                  </label>
+                  <Select
+                    placeholder="Objective"
+                    value={newCampaignForm.specialAdCategory}
+                    onChange={(event) =>
+                      this.newCampaignSelectHandler(event, "specialAdCategory")
+                    }
+                    options={[
+                      {
+                        value: "NONE",
+                        label: "None",
+                      },
+                      {
+                        value: "HOUSING",
+                        label: "Housing",
+                      },
+                      {
+                        value: "CREDIT",
+                        label: "Credit",
+                      },
+                      {
+                        value: "EMPLOYMENT",
+                        label: "Employment",
+                      },
+                    ]}
+                  />
                 </Col>
               </Row>
               <div
@@ -346,50 +365,52 @@ class AdsHeader extends Component {
       </>
     );
     const step2 = (
-      
       <>
-      {this.state.createNewAdSet ? <AdSetForm></AdSetForm> : (
-        <>
-        <Form>
-          <Select
-            value={selectedAdSet}
-            onChange={this.changeAdSetHandler}
-            options={this.state.adsets.map((adset) => {
-              return {
-                value: adset.id,
-                label: `${adset.name} : goal: ${adset.optimization_goal} (status: ${adset.status})`,
-              };
-            })}
-          />
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "flex-end",
-              marginTop: "1rem",
-            }}
-          >
+        {this.state.createNewAdSet ? (
+          <AdSetForm></AdSetForm>
+        ) : (
+          <>
+            <Form>
+              <Select
+                value={selectedAdSet}
+                onChange={this.changeAdSetHandler}
+                options={this.state.adsets.map((adset) => {
+                  return {
+                    value: adset.id,
+                    label: `${adset.name} : goal: ${adset.optimization_goal} (status: ${adset.status})`,
+                  };
+                })}
+              />
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "flex-end",
+                  marginTop: "1rem",
+                }}
+              >
+                <Button
+                  className="pull-right"
+                  size="sm"
+                  color="primary"
+                  type="button"
+                  onClick={this.nextStepHandler}
+                >
+                  next
+                </Button>
+              </div>
+            </Form>
+            <p className="text-primary">Or</p>{" "}
             <Button
-              className="pull-right"
+              onClick={() => this.setState({ createNewAdSet: true })}
               size="sm"
-              color="primary"
+              color="info"
               type="button"
-              onClick={this.nextStepHandler}
             >
-              next
+              Create New
             </Button>
-          </div>
-        </Form>
-        <p className="text-primary">Or</p>{" "}
-        <Button 
-        onClick={() => this.setState({ createNewAdSet: true })}
-        size="sm" color="info" type="button">
-          Create New
-        </Button>
-        </>
+          </>
         )}
       </>
-      
-
     );
     const step3 = (
       <>
