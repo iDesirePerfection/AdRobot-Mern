@@ -60,10 +60,10 @@ const CustomerSchema = new Schema({
         default: Date.now
     },
     tags: {
-        type:[{}]
+        type: [{}]
     },
     facebookId: {
-        type:String
+        type: String
     }
 });
 module.exports = Customer = mongoose.model('customer', CustomerSchema);

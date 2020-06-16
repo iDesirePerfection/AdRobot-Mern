@@ -3,7 +3,8 @@ const auth = require('../../middleware/auth');
 const Customer = require('../../models/Customer');
 const router = express.Router();
 const { check, validationResult } = require('express-validator');
-
+var querystring = require('querystring');
+var url = require('url');
 // @route   POST api/customers
 // @desc    Create or update customer 
 // @access  Public 
@@ -36,17 +37,18 @@ router.post('/', [
             hobbies,
             phoneNumber,
             maritalStatus,
-            childrenNumber
+            childrenNumber,
+            tags
 
         } = req.body;
-
+        console.log(tags);
         // Build Customer object
         const customerFields = {};
 
         if (firstName) customerFields.firstName = firstName;
         if (lastName) customerFields.lastName = lastName;
         if (email) customerFields.email = email;
-
+        if (tags) customerFields.tags = tags;
         if (dateOfBirth) customerFields.dateOfBirth = dateOfBirth;
         if (fieldOfWork) customerFields.fieldOfWork = fieldOfWork;
         if (gender) customerFields.gender = gender;
@@ -65,6 +67,7 @@ router.post('/', [
         if (country) customerFields.address.country = country;
         if (postalCode) customerFields.address.postalCode = postalCode;
         if (street) customerFields.address.street = street;
+
 
         try {
             let customer = await Customer.findOne({ email });
@@ -127,8 +130,8 @@ router.get('/:user_id', async (req, res) => {
         res.status(500).send('server error');
     }
 });
-// @route   GET api/customers/:user_id
-// @desc    Get profile by user id
+// @route   PUT api/customers/:user_id
+// @desc    put modify customer by id
 // @access  PUBLIC 
 router.put('/update/:user_id', [
     check('firstName', 'firstname is required').not().isEmpty(),
@@ -160,7 +163,7 @@ router.put('/update/:user_id', [
             ChildrenNumber
         } = req.body;
 
-       
+
         const customerFields = {};
 
         if (firstName) customerFields.firstName = firstName;
@@ -214,4 +217,6 @@ router.delete('/:user_id', async (req, res) => {
         res.status(500).send('server error');
     }
 });
+
+
 module.exports = router;
