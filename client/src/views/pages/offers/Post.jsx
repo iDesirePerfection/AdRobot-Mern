@@ -11,18 +11,17 @@ import {
   Col,
 } from "reactstrap";
 
+
 class Post extends Component {
   constructor(props) {
     super(props);
   }
   render() {
-    return (
+    return this.props.post.attachments ? (
       <Col lg="4">
         <Card>
           <CardBody>
-            <CardTitle className="h2 mb-0">
-              Created by AdRobot
-            </CardTitle>
+            <CardTitle className="h2 mb-0">Created by AdRobot</CardTitle>
             <CardText className="mt-4">
               {this.props.post.attachments.data[0].description}
             </CardText>
@@ -32,13 +31,10 @@ class Post extends Component {
             src={this.props.post.attachments.data[0].media.image.src}
             top
           />
-          <small className="text-muted">
-                @{this.props.post.created_time}
-         </small>
+          <small className="text-muted">@{this.props.post.created_time}</small>
         </Card>
-        
       </Col>
-    );
+    ) : ''
   }
 }
 

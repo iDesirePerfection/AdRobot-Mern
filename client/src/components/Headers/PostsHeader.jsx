@@ -76,6 +76,7 @@ class PostsHeader extends React.Component {
     };
     data.append("file", toPost.selectedFile);
     data.append("message", toPost.description);
+    console.log(data.get('file'));
     this.setState({loading:true})
     axios
       .post(

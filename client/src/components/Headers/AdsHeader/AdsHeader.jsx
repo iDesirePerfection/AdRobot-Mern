@@ -29,6 +29,7 @@ import {
   InputGroupText,
 } from "reactstrap";
 import Axios from "axios";
+import { JsonWebTokenError } from "jsonwebtoken";
 class AdsHeader extends Component {
   constructor(props) {
     super(props);
@@ -46,7 +47,7 @@ class AdsHeader extends Component {
     },
     adsets: [],
     createNewAdSet: false,
-    step: 2,
+    step: 1,
     selectedCampaign: null,
     selectedAdSet: null,
     selectedPost: null,
@@ -200,6 +201,37 @@ class AdsHeader extends Component {
       });
   };
 
+  newAdSetSubmitHandler = (adSet) => {
+    let facebookAdSet = {
+      name:adSet.name,
+      lifetime_budget:adSet.lifetimeBudget,
+      start_time:'2020-05-30T23:41:41-0800',
+      end_time:'2020-08-30T23:41:41-0800',
+      campaign_id:this.state.selectedCampaign.value,
+      bid_amount:adSet.bidAmount,
+      billing_event:adSet.billingEvent.value,
+      optimization_goal:adSet.optimizationGoal.value,
+      targeting:adSet.targeting,
+      status:adSet.status.value
+    }
+    let adSets = `
+    {
+    "lifetime_budget" : "20000",
+  "start_time" : "2020-05-01T23:41:41-0800",
+  "end_time" : "2020-08-30T23:41:41-0800",
+  "campaign_id" : "120330000494395112",
+  "bid_amount" : "500",
+  "billing_event" : "IMPRESSIONS",
+  "optimization_goal" : "POST_ENGAGEMENT",
+  "targeting" : {"age_min":20,"age_max":24,"behaviors":[{"id":6002714895372,"name":"All travelers"}],"genders":[1],"geo_locations":{"countries":["US"],"regions":[{"key":"4081"}],"cities":[{"key":"777934","radius":10,"distance_unit":"mile"}]},"life_events":[{"id":6002714398172,"name":"Newlywed (1 year)"}],"facebook_positions":["feed"],"publisher_platforms":["facebook","audience_network"]},
+  "status" : "ACTIVE"
+    }
+    `;
+    let stringifiedAdSet= JSON.parse(adSets);
+    stringifiedAdSet.name=facebookAdSet.name;
+    axios.post(`https://graph.facebook.com/v6.0/${accessInfo.sandboxAdId}/adsets`,stringifiedAdSet)
+    .then(r=>console.log(r.data))
+  }
   render() {
     const { selectedCampaign } = this.state;
     const { selectedAdSet } = this.state;
@@ -367,7 +399,7 @@ class AdsHeader extends Component {
     const step2 = (
       <>
         {this.state.createNewAdSet ? (
-          <AdSetForm></AdSetForm>
+          <AdSetForm newAdSet={this.newAdSetSubmitHandler}></AdSetForm>
         ) : (
           <>
             <Form>

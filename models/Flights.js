@@ -42,6 +42,9 @@ const FlightsSchema = new Schema({
   arrival_date: {
     type: Date,
   },
+  post_id: {
+    type: String,
+  }
 });
 
 module.exports = Flights = mongoose.model("flights", FlightsSchema);

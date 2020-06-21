@@ -16,13 +16,16 @@ import {
 class AdCreative extends Component {
   constructor(props) {
     super(props);
+    console.log(props.post.attachments)
   }
 
   clickHandler = (post) => {
     this.props.select(post);
   };
   render() {
-    return (
+
+    return this.props.post.attachments ?  (
+      
       <Card
         style={{
           width: "100%",
@@ -63,7 +66,7 @@ class AdCreative extends Component {
             top
           /> */}
       </Card>
-    );
+    ) : ''
   }
 }
 

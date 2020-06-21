@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Select from "react-select";
 import classnames from "classnames";
 import ReactDatetime from "react-datetime";
+import axios from 'axios';
 import {
   Row,
   Col,
@@ -23,9 +24,20 @@ class AdSetForm extends Component {
     bidAmount: "",
     billingEvent: "",
     optimizationGoal: "",
-    targeting: {},
+    // targeting: null,
     status: "",
+    magique:false
   };
+
+  componentDidMount() {
+    axios.get('http://localhost:5000/api/search/target/5eba233599abdd16ac80f066')
+    .then(
+      r=> {
+
+        this.setState({ targeting:r.data },()=>this.setState({magique:true}));
+      }
+    );
+  }
 
   changeTextHandler = (event, inputIdentifier) => {
     const updatedForm = {
@@ -44,12 +56,16 @@ class AdSetForm extends Component {
     this.setState({ ...updatedForm });
   };
   changeSelectHandler = (event,inputIdentifier) => {
-    const updatedForm = {
+    
+    let updatedForm = {
       ...this.state
     }
 
     updatedForm[inputIdentifier] = event;
     this.setState({...updatedForm});
+  }
+  newAdSetSubmitHandler = ()=> {
+    
   }
   render() {
     return (
@@ -200,8 +216,19 @@ class AdSetForm extends Component {
           </Row>
           <Row>
             <Col lg="12">
-              <h2>Targeting:</h2>
-            <label className="form-control-label">Targeting:</label>
+              
+            
+            {this.state.magique === true ? ( <>
+              <label className="form-control-label">Targeting:</label>
+              <br></br>
+              <small className="text-muted">Min Age: {this.state.targeting.age_min}</small>
+              <br></br>
+              <small className="text-muted">Max Age: {this.state.targeting.age_max}</small>
+              <br></br>
+              <small className="text-muted">Behavior: {this.state.targeting.behaviors[0].name}</small>
+            </>) :'' }
+            
+                
               </Col>
           </Row>
           <div
@@ -216,7 +243,7 @@ class AdSetForm extends Component {
               size="sm"
               color="primary"
               type="button"
-              //   onClick={this.newCampaignSubmitHandler}
+                 onClick={()=>this.props.newAdSet(this.state)}
             >
               next
             </Button>
