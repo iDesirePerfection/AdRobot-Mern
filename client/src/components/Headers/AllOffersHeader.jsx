@@ -124,7 +124,7 @@ class AllOffersHeader extends React.Component {
       }
     }
     const body = JSON.stringify({ offer });
-    axios.post(`http://localhost:5000/api/offers`, body, config)
+    axios.post(`136.144.244.254:5000/api/offers`, body, config)
       .then(res => {
         console.log(res);
         console.log(res.data);

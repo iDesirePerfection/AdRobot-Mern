@@ -47,7 +47,7 @@ class ViewPerson extends React.Component {
   constructor(props) {
     super(props);
     console.log(this.props.location.state.id);
-    axios.get(`http://localhost:5000/api/customers/${this.props.location.state.id}`).then((res) => {
+    axios.get(`136.144.244.254:5000/api/customers/${this.props.location.state.id}`).then((res) => {
         const person = res.data;
       const finalPerson = {
         firstName: person.firstName,
@@ -151,7 +151,7 @@ const finalPerson = {
       }
 
   // axios post request to add or update user to database
-  axios.post("http://localhost:5000/api/customers", finalPerson, config).then(res=> {
+  axios.post("136.144.244.254:5000/api/customers", finalPerson, config).then(res=> {
   // change person state immutably
    console.log(res);
   })

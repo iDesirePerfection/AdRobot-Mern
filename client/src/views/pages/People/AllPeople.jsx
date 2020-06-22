@@ -18,7 +18,7 @@ class AllPeople extends React.Component {
     };
   }
   componentDidMount() {
-    axios.get(`http://localhost:5000/api/customers`).then((res) => {
+    axios.get(`136.144.244.254:5000/api/customers`).then((res) => {
       const people = res.data;
       this.setState({ people });
     });
@@ -50,7 +50,7 @@ class AllPeople extends React.Component {
 
     // axios post request to add or update user to database
     axios
-      .post("http://localhost:5000/api/customers", finalPerson, config)
+      .post("136.144.244.254:5000/api/customers", finalPerson, config)
       .then((res) => {
         // change person state immutably
         const people = [...this.state.people];
@@ -88,7 +88,7 @@ class AllPeople extends React.Component {
 
   // send delete request to server
 
-  axios.delete(`http://localhost:5000/api/customers/${id}`)
+  axios.delete(`136.144.244.254:5000/api/customers/${id}`)
   .then(res => {
     //handle resolve
     console.log(res.data);

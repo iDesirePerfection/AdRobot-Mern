@@ -32,7 +32,7 @@ class AllOffers extends React.Component {
           }
         };
     componentDidMount() {
-      axios.get(`http://localhost:5000/api/flights`)
+      axios.get(`136.144.244.254:5000/api/flights`)
         .then(res => {
           const offers = res.data;
           this.setState({ offers });
@@ -45,7 +45,7 @@ class AllOffers extends React.Component {
   }
   deleteOffer(offerId){
       // console.log(offerId);
-      // axios.delete(`http://localhost:5000/api/offer/${offerId}`)
+      // axios.delete(`136.144.244.254:5000/api/offer/${offerId}`)
       // .then(res =>{
       //   console.log(res);
       //   console.log(res.data);
@@ -71,7 +71,7 @@ class AllOffers extends React.Component {
         {}
       )
       .then((r) => {
-       axios.put(`http://localhost:5000/api/flights?flight_id=${offer._id}&post_id=${r.data.id}`) 
+       axios.put(`136.144.244.254:5000/api/flights?flight_id=${offer._id}&post_id=${r.data.id}`) 
       })
       .catch((error) => {
         console.log(error);

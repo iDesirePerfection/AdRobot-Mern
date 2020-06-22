@@ -30,7 +30,7 @@ class AdSetForm extends Component {
   };
 
   componentDidMount() {
-    axios.get('http://localhost:5000/api/search/target/5eba233599abdd16ac80f066')
+    axios.get('136.144.244.254:5000/api/search/target/5eba233599abdd16ac80f066')
     .then(
       r=> {
 

@@ -8,7 +8,7 @@ import {
 //get customers
 export const getCustomers = () => async dispatch => {
     try {
-        const res = await axios.get('http://localhost:5000/api/customers')
+        const res = await axios.get('136.144.244.254:5000/api/customers')
 
         dispatch({
             type: GET_CUSTOMERS,
