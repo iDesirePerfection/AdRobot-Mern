@@ -6,7 +6,7 @@
     "@fullcalendar/core": "4.0.2",
     "@fullcalendar/daygrid": "4.0.1",
     "@fullcalendar/interaction": "4.0.2",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "chart.js": "2.8.0",
     "classnames": "2.2.6",
     "dropzone": "5.5.1",
